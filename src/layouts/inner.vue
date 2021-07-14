@@ -3,6 +3,7 @@
     <div class="scroll scroll-up">
       <div class="inner-layout__wrapper common-layout-class">
         <Header @mobileClick="mobileClick" />
+        <Logo :mini="isMiniLogo" />
         <router-view />
       </div>
     </div>
@@ -14,6 +15,7 @@ import {mapState, mapMutations} from 'vuex'
 import setBg from "../mixins/setBg"
 import colorScrollbar from "../mixins/colorScrollbar"
 import Header from "../components/common/Header"
+import Logo from "../components/common/Logo"
 export default {
   name: 'Inner',
   data() {
@@ -23,7 +25,8 @@ export default {
     }
   },
   components: {
-    Header
+    Header,
+    Logo
   },
   mixins: [
     setBg,
