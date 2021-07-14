@@ -11,9 +11,38 @@ const routes = [
     component: Home
   },
   {
+    path: '/text',
+    name: 'Text',
+    component: () => import('../views/Text.vue')
+  },
+  {
+    path: '/photo',
+    name: 'Photo',
+    component: () => import('../views/Photo.vue')
+  },
+  {
+    path: '/video',
+    name: 'Video',
+    component: () => import('../views/Video.vue')
+  },
+  {
+    path: '/feedback',
+    name: 'Feedback',
+    component: () => import('../views/Feedback.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue')
+  },
+  {
+    path: '/error',
+    name: 'Error',
+    component: () => import('../views/Error.vue')
+  },
+  {
+    path: '*',
+    redirect: '/error'
   }
 ]
 
