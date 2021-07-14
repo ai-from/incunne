@@ -421,7 +421,7 @@ export default {
       return `${minutes}:${seconds}`
     },
     moveCircle(e, container, handler, direction) {
-      let scrolled = document.querySelector('.default-layout > .scroll').scrollTop
+      let scrolled = document.querySelector('.inner-layout > .scroll').scrollTop
       let playerLeftMargin = document.querySelector('.player__wrapper').offsetLeft
       let playerTopMargin = document.querySelector('.player__wrapper').offsetTop
       let limits = {
