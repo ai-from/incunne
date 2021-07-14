@@ -5,5 +5,5 @@
 </template>
 
 <style lang="sass">
-
+#app
 </style>
