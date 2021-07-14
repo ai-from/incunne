@@ -4,6 +4,7 @@
       <div class="inner-layout__wrapper common-layout-class">
         <Header @mobileClick="mobileClick" />
         <Logo :mini="isMiniLogo" />
+        <Player :class="{hidden: !isVisibleBlock}" />
         <router-view />
         <Footer :class="{hidden: !isVisibleBlock}" />
       </div>
@@ -17,6 +18,7 @@ import setBg from "../mixins/setBg"
 import colorScrollbar from "../mixins/colorScrollbar"
 import Header from "../components/common/Header"
 import Logo from "../components/common/Logo"
+import Player from "../components/home/Player"
 import Footer from "../components/common/Footer"
 export default {
   name: 'Inner',
@@ -29,6 +31,7 @@ export default {
   components: {
     Header,
     Logo,
+    Player,
     Footer
   },
   mixins: [
