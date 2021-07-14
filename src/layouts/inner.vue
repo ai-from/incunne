@@ -5,7 +5,7 @@
         <Header @mobileClick="mobileClick" />
         <Logo :mini="isMiniLogo" />
         <Player :class="{hidden: !isVisibleBlock}" />
-        <router-view />
+        <router-view :class="{hidden: !isVisibleBlock}" />
         <Footer :class="{hidden: !isVisibleBlock}" />
       </div>
     </div>

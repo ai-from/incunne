@@ -1,11 +1,15 @@
 <template>
-  <div>
-    Home
+  <div class="home-page indent">
+    <PlaylistControl />
   </div>
 </template>
 
 <script>
+import PlaylistControl from "../components/home/PlaylistControl"
 export default {
-  name: 'Home'
+  name: 'Home',
+  components: {
+    PlaylistControl
+  }
 }
 </script>
