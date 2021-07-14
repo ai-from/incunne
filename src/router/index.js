@@ -10,7 +10,8 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      title: 'Incunne | Music'
+      title: 'Incunne | Music',
+      layout: 'inner'
     }
   },
   {
@@ -18,7 +19,8 @@ const routes = [
     name: 'Text',
     component: () => import('../views/Text.vue'),
     meta: {
-      title: 'Incunne | Text'
+      title: 'Incunne | Text',
+      layout: 'inner'
     }
   },
   {
@@ -26,7 +28,8 @@ const routes = [
     name: 'Photo',
     component: () => import('../views/Photo.vue'),
     meta: {
-      title: 'Incunne | Photo'
+      title: 'Incunne | Photo',
+      layout: 'inner'
     }
   },
   {
@@ -34,7 +37,8 @@ const routes = [
     name: 'Video',
     component: () => import('../views/Video.vue'),
     meta: {
-      title: 'Incunne | Video'
+      title: 'Incunne | Video',
+      layout: 'inner'
     }
   },
   {
@@ -42,7 +46,8 @@ const routes = [
     name: 'Feedback',
     component: () => import('../views/Feedback.vue'),
     meta: {
-      title: 'Incunne | Feedback'
+      title: 'Incunne | Feedback',
+      layout: 'inner'
     }
   },
   {
@@ -50,7 +55,8 @@ const routes = [
     name: 'About',
     component: () => import('../views/About.vue'),
     meta: {
-      title: 'Incunne | About'
+      title: 'Incunne | About',
+      layout: 'inner'
     }
   },
   {
@@ -58,7 +64,8 @@ const routes = [
     name: 'Error',
     component: () => import('../views/Error.vue'),
     meta: {
-      title: 'Incunne | Error'
+      title: 'Incunne | Error',
+      layout: 'error'
     }
   },
   {
