@@ -1,8 +1,67 @@
 <template>
-  <div class="inner-layout">
+  <div class="inner-layout" v-bar>
     <div class="scroll scroll-up">
       <div class="inner-layout__wrapper common-layout-class">
-        Inner layout
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
+        Inner layout <br>
         <router-view />
       </div>
     </div>
@@ -10,8 +69,16 @@
 </template>
 
 <script>
+import colorScrollbar from "../mixins/colorScrollbar"
 export default {
-  name: 'Inner'
+  name: 'Inner',
+  mixins: [
+    colorScrollbar
+  ],
+  mounted() {
+    this.colorScrollbar()
+    this.$root.$on('setTheme', () => this.colorScrollbar())
+  }
 }
 </script>
 
