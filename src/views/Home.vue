@@ -54,3 +54,16 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.home-page
+  .albums
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(320px, min-content))
+    grid-gap: 50px
+
+@media screen and (max-width: 400px)
+  .home-page
+    .albums
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))
+</style>
