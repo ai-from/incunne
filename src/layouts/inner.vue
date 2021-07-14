@@ -3,65 +3,6 @@
     <div class="scroll scroll-up">
       <div class="inner-layout__wrapper common-layout-class">
         Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
-        Inner layout <br>
         <router-view />
       </div>
     </div>
@@ -69,13 +10,32 @@
 </template>
 
 <script>
+import {mapState, mapMutations} from 'vuex'
+import setBg from "../mixins/setBg"
 import colorScrollbar from "../mixins/colorScrollbar"
 export default {
   name: 'Inner',
   mixins: [
+    setBg,
     colorScrollbar
   ],
+  computed: {
+    ...mapState('common', {
+      isBg: state => state.isBg,
+      theme: state => state.theme
+    })
+  },
+  methods: {
+    ...mapMutations('common', [
+      'SET_BG'
+    ])
+  },
   mounted() {
+    if(!this.isBg) {
+      this.setBg()
+      this.SET_BG(true)
+    }
+
     this.colorScrollbar()
     this.$root.$on('setTheme', () => this.colorScrollbar())
   }
