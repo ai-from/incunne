@@ -2,7 +2,7 @@
   <div class="inner-layout" v-bar>
     <div class="scroll scroll-up">
       <div class="inner-layout__wrapper common-layout-class">
-        Inner layout <br>
+        <Header @mobileClick="mobileClick" />
         <router-view />
       </div>
     </div>
@@ -13,8 +13,18 @@
 import {mapState, mapMutations} from 'vuex'
 import setBg from "../mixins/setBg"
 import colorScrollbar from "../mixins/colorScrollbar"
+import Header from "../components/common/Header"
 export default {
   name: 'Inner',
+  data() {
+    return {
+      isVisibleBlock: true,
+      isMiniLogo: false
+    }
+  },
+  components: {
+    Header
+  },
   mixins: [
     setBg,
     colorScrollbar
@@ -28,7 +38,18 @@ export default {
   methods: {
     ...mapMutations('common', [
       'SET_BG'
-    ])
+    ]),
+    ...mapMutations('albums', [
+      'SET_PLAYLIST'
+    ]),
+    mobileClick() {
+      this.isVisibleBlock = !this.isVisibleBlock
+    },
+    setLogoSize() {
+      let w = window.getComputedStyle(document.body).getPropertyValue('width')
+      w = w.replace('px', '') * 1
+      this.isMiniLogo = w <= 900
+    }
   },
   mounted() {
     if(!this.isBg) {
@@ -36,8 +57,16 @@ export default {
       this.SET_BG(true)
     }
 
+    if(localStorage.getItem('playlist')) {
+      const playlist = JSON.parse(localStorage.getItem('playlist'))
+      this.SET_PLAYLIST(playlist)
+    }
+
     this.colorScrollbar()
     this.$root.$on('setTheme', () => this.colorScrollbar())
+
+    this.setLogoSize()
+    window.addEventListener('resize', () => this.setLogoSize())
   }
 }
 </script>
