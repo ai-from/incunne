@@ -1,17 +1,52 @@
 <template>
-  <div class="error-layout">
+  <div class="error-layout" v-bar>
     <div class="scroll scroll-up">
       <div class="error-layout__wrapper common-layout-class">
-        Error layout
+        <Header />
+        <Logo />
         <router-view />
+        <Footer />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {mapState, mapMutations} from 'vuex'
+import setBg from "../mixins/setBg"
+import colorScrollbar from "../mixins/colorScrollbar"
+import Header from "../components/common/Header"
+import Logo from "../components/common/Logo"
+import Footer from "../components/common/Footer"
 export default {
-  name: 'Error'
+  name: 'Error',
+  components: {
+    Header,
+    Logo,
+    Footer
+  },
+  computed: {
+    ...mapState('common', {
+      isBg: state => state.isBg
+    })
+  },
+  mixins: [
+    setBg,
+    colorScrollbar
+  ],
+  methods: {
+    ...mapMutations('common', [
+      'SET_BG'
+    ])
+  },
+  mounted() {
+    if(!this.isBg) {
+      this.setBg()
+      this.SET_BG(true)
+    }
+    this.colorScrollbar()
+    this.$root.$on('setTheme', () => this.colorScrollbar())
+  }
 }
 </script>
 
