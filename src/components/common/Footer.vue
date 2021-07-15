@@ -17,7 +17,7 @@
     </div>
 
     <div class="footer__rights">
-      All rights reserved
+      <span :style="{color: `rgba(${theme}, .7)`}">All rights</span>reserved
     </div>
 
   </footer>
@@ -65,8 +65,14 @@ export default {
     grid-template-columns: repeat(3, min-content)
   &__rights
     display: grid
+    grid-template-columns: repeat(2, min-content)
     justify-content: right
     align-items: center
+    white-space: nowrap
+    grid-column-gap: 4px
+    span
+      background: rgba(0, 0, 0, .5)
+      padding: 4px
 
 @media screen and (max-width: 900px)
   .footer
