@@ -90,4 +90,9 @@ a
 
 .scroll-up
   overflow: auto scroll !important
+
+@media screen and (max-width: 700px)
+  .indent
+    padding-left: 15px
+    padding-right: 15px
 </style>
