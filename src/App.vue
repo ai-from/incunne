@@ -44,9 +44,9 @@ html, body
   right: 0
   bottom: 0
   left: 0
-  background-size: cover
   z-index: -1
   background: url("./assets/img/bg.jpg") no-repeat center top
+  background-size: cover
 
 a
   text-decoration: none
