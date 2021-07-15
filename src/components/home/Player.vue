@@ -466,12 +466,14 @@ export default {
     getVolumeDir() {
       let volumeHeight
       if(this.$refs.playerVolume) volumeHeight = window.getComputedStyle(this.$refs.playerVolume).getPropertyValue('height')
-      volumeHeight = volumeHeight.replace('px', '') * 1
-      this.volumeDir = volumeHeight > 4
-      if(this.volumeDir) {
-        this.$refs.playerVolumeCircle.style.left = '50%'
-      } else {
-        this.$refs.playerVolumeCircle.style.left = 'unset'
+      if(volumeHeight) {
+        volumeHeight = volumeHeight.replace('px', '') * 1
+        this.volumeDir = volumeHeight > 4
+        if(this.volumeDir) {
+          this.$refs.playerVolumeCircle.style.left = '50%'
+        } else {
+          this.$refs.playerVolumeCircle.style.left = 'unset'
+        }
       }
     }
   },
