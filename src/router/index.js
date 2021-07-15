@@ -16,8 +16,8 @@ const routes = [
   },
   {
     path: '/text',
-    name: 'Text',
-    component: () => import('../views/Text.vue'),
+    name: 'TextBoth',
+    component: () => import('../views/TextBoth.vue'),
     meta: {
       title: 'Incunne | Text',
       layout: 'inner'
