@@ -1,6 +1,6 @@
 <template>
-  <div>
-    Video
+  <div class="video-page indent">
+    Video | This page is under development
   </div>
 </template>
 

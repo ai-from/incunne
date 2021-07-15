@@ -1,6 +1,6 @@
 <template>
-  <div>
-    Feedback
+  <div class="feedback-page indent">
+    Feedback | This page is under development
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    Photo
+  <div class="photo-page indent">
+    Photo | This page is under development
   </div>
 </template>
 
