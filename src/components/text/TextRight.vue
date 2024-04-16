@@ -16,12 +16,14 @@
         Incunne
       </div>
       <div class="song-up">
-        <svg width="15" height="9" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg"
-             @click="up"
-        >
-          <line y1="-1" x2="10.0419" y2="-1" transform="matrix(0.716995 -0.697078 0.528302 0.849057 2 9)" :stroke="`rgb(${theme})`" stroke-width="2"/>
-          <line y1="-1" x2="10.0419" y2="-1" transform="matrix(-0.716995 -0.697078 -0.528302 0.849057 13 9)" :stroke="`rgb(${theme})`" stroke-width="2"/>
-        </svg>
+        <SVGIcon
+          class="song-up-btn"
+          iconName="up"
+          tooltipText="Up"
+          tooltipLocation="top"
+          :color="`rgb(${theme})`"
+          @click="up"
+        />
       </div>
     </div>
   </div>
@@ -109,7 +111,7 @@ export default {
     .song-up
       display: grid
       justify-content: right
-      svg
+      .song-up-btn
         cursor: pointer
 
 @media screen and (max-width: 400px)

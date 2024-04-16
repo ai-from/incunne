@@ -90,9 +90,10 @@ export default {
       colors: [
         {val: '187,18,18', active: true},
         {val: '219,190,0', active: false},
-        {val: '0,128,128', active: false},
         {val: '0,172,0', active: false},
-        {val: '136,53,133', active: false}
+        {val: '0,128,128', active: false},
+        {val: '136,53,133', active: false},
+        {val: '181,87,29', active: false}
       ],
       mobileMenu: false
     }
@@ -220,7 +221,7 @@ export default {
     grid-template-columns: repeat(3, min-content)
   &__colors
     display: grid
-    grid-template-columns: repeat(5, min-content)
+    grid-template-columns: repeat(6, min-content)
     grid-column-gap: 10px
     justify-content: right
   &__color

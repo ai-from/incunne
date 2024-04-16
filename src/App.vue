@@ -6,17 +6,60 @@
 
 <script>
 import inner from './layouts/inner'
-import error from "./layouts/error";
+import error from "./layouts/error"
+import {mapState} from 'vuex'
 export default {
   name: 'App',
+  data() {
+    return {
+      albumIndex: null,
+      songIndex: null
+    }
+  },
   components: {
     inner,
     error
   },
   computed: {
+    ...mapState('albums', {
+      albums: state => state.albums
+    }),
     layout() {
       return this.$route && this.$route.meta && this.$route.meta.layout ?
         this.$route.meta.layout : ''
+    }
+  },
+  mounted() {
+    const search = document.location.search;
+    if(search) {
+      const regExp = /^\?song\=[a-z\d-]{1,100}$/g;
+      const isSearching = regExp.test(search)
+      if(isSearching) {
+        const searchingSong = search.slice(6)
+        let isFound = false
+        this.albums.forEach((album, albumIndex) => {
+          album.songs.forEach((song, songIndex) => {
+            if(song.innerTitle.toLowerCase() === searchingSong) {
+              isFound = true
+              this.albumIndex = albumIndex
+              this.songIndex = songIndex
+            }
+          })
+        })
+        if(isFound) {
+          this.$router.push({name: 'Home'})
+          this.$root.$emit('chooseSong', {
+            url: true,
+            albumIndex: this.albumIndex,
+            songIndex: this.songIndex
+          })
+          this.$root.$emit('checkActiveSongs', this.albumIndex, this.songIndex)
+        } else {
+          this.$router.push({name: 'Error'})
+        }
+      } else {
+        this.$router.push({name: 'Error'})
+      }
     }
   }
 }
