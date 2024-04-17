@@ -4,7 +4,7 @@ export default {
     theme: "187,18,18",
     isBg: false,
     isPlayerActive: false,
-    lang: "en",
+    lang: "ru",
   },
   mutations: {
     SET_THEME(state, load) {
