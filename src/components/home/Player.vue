@@ -10,7 +10,7 @@
         class="player__indicator"
         cssPosition="absolute"
         iconName="mode"
-        tooltipText="Mode | Hot Keys"
+        :tooltipText="lang === 'en' ? 'Mode | Hot Keys' : 'Режим | Горячие клавиши'"
         :tooltipLocation="tooltipLocation.mode"
         :classes="['player__indicator']"
         :color="isPlayerActive && this.audio && this.audio.duration ? `rgb(${theme})` : `rgba(219, 219, 219, .7)`"
@@ -20,7 +20,7 @@
         <SVGIcon
           class="player__prev"
           iconName="prevSong"
-          tooltipText="Previous: Ctrl + ArrowLeft"
+          :tooltipText="lang === 'en' ? 'Previous: Ctrl + ArrowLeft' : 'Предыдущий | Ctrl + Стрелка влево'"
           :tooltipLocation="tooltipLocation.prevSong"
           :color="`rgb(${theme})`"
           @click="prevClick"
@@ -29,7 +29,7 @@
         <SVGIcon
           class="player__play"
           iconName="play"
-          tooltipText="Play: Space"
+          :tooltipText="lang === 'en' ? 'Play: Space' : 'Воспроизвести | Пробел'"
           :tooltipLocation="tooltipLocation.play"
           :color="`rgb(${theme})`"
           @click="playClick"
@@ -39,7 +39,7 @@
         <SVGIcon
           class="player__pause"
           iconName="pause"
-          tooltipText="Pause: Space"
+          :tooltipText="lang === 'en' ? 'Pause: Space' : 'Пауза | Пробел'"
           :tooltipLocation="tooltipLocation.pause"
           :color="`rgb(${theme})`"
           @click="pauseClick"
@@ -49,7 +49,7 @@
         <SVGIcon
           class="player__next"
           iconName="nextSong"
-          tooltipText="Next: Ctrl + ArrowRight"
+          :tooltipText="lang === 'en' ? 'Next: Ctrl + ArrowRight' : 'Следующий | Ctrl + Стрелка вправо'"
           :tooltipLocation="tooltipLocation.nextSong"
           :color="`rgb(${theme})`"
           @click="nextClick"
@@ -58,7 +58,7 @@
 
       <div class="player__center">
         <div class="player__title" :style="{ color: `rgb(${theme})` }">
-          {{ songTitle ? `${songTitle}` : "Choose a song" }}
+          {{ songTitle ? `${songTitle}` : lang === 'en' ? 'Choose a song' : 'Выберите песню' }}
         </div>
 
         <div class="player__line" @click="lineClick" ref="playerLine">
@@ -87,7 +87,7 @@
             <SVGIcon
               class="player__time-back"
               iconName="timeBack"
-              tooltipText="Time back: ArrowLeft"
+              :tooltipText="lang === 'en' ? 'Time back: ArrowLeft' : 'Время назад: Стрелка влево'"
               :tooltipLocation="tooltipLocation.timeBack"
               :color="`rgb(${theme})`"
               @click="timeBack"
@@ -96,7 +96,7 @@
             <SVGIcon
               class="player__time-forward"
               iconName="timeForward"
-              tooltipText="Time forward: ArrowRight"
+              :tooltipText="lang === 'en' ? 'Time forward: ArrowRight' : 'Время вперед | Стрелка вправо'"
               :tooltipLocation="tooltipLocation.timeForward"
               :color="`rgb(${theme})`"
               @click="timeForward"
@@ -112,7 +112,7 @@
           <SVGIcon
             class="player__repeat"
             iconName="repeat"
-            tooltipText="Repeat: A"
+            :tooltipText="lang === 'en' ? 'Repeat: A' : 'Повторить: A'"
             :tooltipLocation="tooltipLocation.repeat"
             :color="`${isRepeat ? `rgb(${theme})` : `rgba(219,219,219, .7)`}`"
             @click="repeatClick"
@@ -121,7 +121,7 @@
           <SVGIcon
             class="player__mix"
             iconName="mix"
-            tooltipText="Mix: S"
+            :tooltipText="lang === 'en' ? 'Mix: S' : 'Перемешать: S'"
             :tooltipLocation="tooltipLocation.mix"
             :color="`${isMix ? `rgb(${theme})` : `rgba(219,219,219, .7)`}`"
             @click="mixClick"
@@ -130,7 +130,7 @@
           <SVGIcon
             class="player__queue"
             iconName="queue"
-            tooltipText="Queue: Z"
+            :tooltipText="lang === 'en' ? 'Queue: Z' : 'По очереди: Z'"
             :tooltipLocation="tooltipLocation.queue"
             :color="`${isQueue ? `rgb(${theme})` : `rgba(219,219,219, .7)`}`"
             @click="queueClick"
@@ -139,7 +139,7 @@
           <SVGIcon
             class="player__download"
             iconName="download"
-            tooltipText="Download: X"
+            :tooltipText="lang === 'en' ? 'Download: X' : 'Скачать: X'"
             :tooltipLocation="tooltipLocation.download"
             :color="`rgb(${theme})`"
             @click="downloadClick"
@@ -158,7 +158,7 @@
               :class="{player__share_hide: this.isCopied}"
               cssPosition="absolute"
               iconName="share"
-              tooltipText="Copy to clipboard: W"
+              :tooltipText="lang === 'en' ? 'Copy to clipboard: W': 'Скопировать в буфер обмена: W'"
               :tooltipLocation="tooltipLocation.share"
               :color="`rgb(${theme})`"
               @click="copyLink"
@@ -168,7 +168,7 @@
               :class="{player__copied_show: this.isCopied}"
               cssPosition="absolute"
               iconName="copied"
-              tooltipText="Copied"
+              :tooltipText="lang === 'en' ? 'Copied' : 'Скопировано'"
               :tooltipLocation="tooltipLocation.copied"
               :color="`rgb(${theme})`"
             /> 
@@ -181,7 +181,8 @@
             @click="volumeClick"
             ref="playerVolume"
             v-tooltip="{
-              title: 'Volume: ArrowUp | ArrowDown', location:tooltipLocation.volume
+              title: {ru: 'Громкость: Стрелка вверх | Стрелка вниз', en: 'Volume: ArrowUp | ArrowDown'},
+              location: tooltipLocation.volume
               }"
           >
             <div
@@ -258,7 +259,6 @@ export default {
         share: 'left',
         copied: 'left',
         volume: 'left'
-
       }
     };
   },
@@ -266,6 +266,7 @@ export default {
     ...mapState("common", {
       theme: (state) => state.theme,
       isPlayerActive: (state) => state.isPlayerActive,
+      lang: state => state.lang
     }),
     ...mapState("albums", {
       albums: (state) => state.albums,

@@ -15,7 +15,7 @@
       <div class="album__top-right">
         <div class="album__title">{{ album.title }}</div>
         <div class="album__year">
-          Release: {{ album.innerTitle === "playlist" ? "No date" : album.date }}
+          {{ lang === 'en' ? 'Release' : 'Дата выхода' }}: {{ album.innerTitle === "playlist" ? lang === 'en' ? 'No date' : 'Отсутствует' : album.date }}
         </div>
       </div>
     </div>
@@ -26,8 +26,8 @@
             v-if="album.innerTitle === 'playlist' && album.songs.length === 0"
             class="playlist__tooltip"
           >
-            <span>Click the 'Edit' to select songs</span>
-            <span>Max: {{ playlistLimit }} items</span>
+            <span>{{ lang === 'en' ? "Click the 'Edit' to select songs" : "Нажмите 'Изменить' для выбора песен" }}</span>
+            <span>{{ lang === 'en' ? 'Max' : 'Максимум' }}: {{ playlistLimit }} {{ lang === 'en' ? 'items' : 'штук' }}</span>
           </div>
           <div
             class="album__song-wrapper"
@@ -61,7 +61,7 @@
             <SVGIcon
               class="album__song-download"
               iconName="download"
-              tooltipText="Download"
+              :tooltipText="lang === 'en' ? 'Download' : 'Скачать'"
               tooltipLocation="left"
               :classes="[isPlaylistChanging ? 'disabled' : '']"
               @click="songDownload(albumIndex, index)"
@@ -79,7 +79,7 @@
         @btnClick="playlistChange"
       />
       <Button
-        :title="btnDownloadTitle"
+        :title="btnDownloadTitle[lang]"
         class="playlist__button"
         :isDisabled="isDisabled"
         @btnClick="playlistDownload"
@@ -87,7 +87,7 @@
     </div>
 
     <Button
-      :title="btnDownloadTitle"
+      :title="btnDownloadTitle[lang]"
       class="album__download"
       @btnClick="downloadAlbum"
       :isDisabled="this.isPlaylistChanging"
@@ -121,7 +121,7 @@ export default {
     },
   },
   data: () => ({
-    btnDownloadTitle: "Download",
+    btnDownloadTitle: {ru: 'Скачать', en: 'Download'},
     songDrag: false,
     moveFromIndex: null,
     moveToIndex: null,
@@ -135,7 +135,8 @@ export default {
   },
   computed: {
     ...mapState("common", {
-      theme: (state) => state.theme,
+      theme: state => state.theme,
+      lang: state => state.lang
     }),
     ...mapState("albums", {
       albums: (state) => state.albums,
@@ -146,7 +147,7 @@ export default {
       return this.album.songs.length === 0 || this.isPlaylistChanging;
     },
     playlistChangeTitle() {
-      return this.isPlaylistChanging ? "Done" : "Edit";
+      return this.isPlaylistChanging ? this.lang === 'en' ? 'Done' : 'Готово' : this.lang === 'en' ? 'Edit' : 'Изменить';
     },
     playlistLimit() {
       let count = 0;

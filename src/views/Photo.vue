@@ -1,11 +1,17 @@
 <template>
   <div class="photo-page indent">
-    Photo | This page is under development
+    {{ lang === 'en' ? 'Photo | This page is under development' : 'Фото | Страница находится в разработке' }}
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
-  name: 'Photo'
+  name: 'Photo',
+  computed: {
+    ...mapState('common', {
+      lang: state => state.lang
+    })
+  }
 }
 </script>

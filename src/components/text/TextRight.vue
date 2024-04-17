@@ -19,7 +19,7 @@
         <SVGIcon
           class="song-up-btn"
           iconName="up"
-          tooltipText="Up"
+          :tooltipText="this.lang === 'en' ? 'Up' : 'Вверх'"
           tooltipLocation="top"
           :color="`rgb(${theme})`"
           @click="up"
@@ -40,7 +40,8 @@ export default {
   }),
   computed: {
     ...mapState('common', {
-      theme: state => state.theme
+      theme: state => state.theme,
+      lang: state => state.lang
     }),
     ...mapState('albums', {
       albums: state => state.albums

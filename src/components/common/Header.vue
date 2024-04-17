@@ -13,7 +13,7 @@
         :style="{color: item.active ? `rgb(${theme})`: ''}"
         @click.native="checkNavLinks(false, index)"
       >
-        {{ item.title }}
+        {{ item.title[lang] }}
       </router-link>
     </div>
 
@@ -46,7 +46,7 @@
                }"
               @click.native="checkNavLinks(true, index)"
             >
-              {{ item.title }}
+              {{ item.title[lang] }}
             </router-link>
           </div>
         </div>
@@ -68,6 +68,14 @@
              @click="setTheme(index)"
         ></div>
       </div>
+      <div class="header__language">
+        <span
+          @click="changeLanguage"
+          :style="{color: `rgb(${theme})`}"
+        >
+          {{ lang.toUpperCase() }}
+        </span>
+      </div>
     </div>
 
   </header>
@@ -80,12 +88,12 @@ export default {
   data() {
     return {
       links: [
-        {title: 'Music', to: '/', active: false},
-        {title: 'Text', to: '/text', active: false},
-        {title: 'Photo', to: '/photo', active: false},
-        {title: 'Video', to: '/video', active: false},
-        {title: 'Feedback', to: '/feedback', active: false},
-        {title: 'About', to: '/about', active: false}
+        {title: {ru: 'Музыка', en: 'Music'}, to: '/', active: false},
+        {title: {ru: 'Текст', en: 'Text'}, to: '/text', active: false},
+        {title: {ru: 'Фото', en: 'Photo'}, to: '/photo', active: false},
+        {title: {ru: 'Видео', en: 'Video'}, to: '/video', active: false},
+        {title: {ru: 'Обратная связь', en: 'Feedback'}, to: '/feedback', active: false},
+        {title: {ru: 'Обо мне', en: 'About'}, to: '/about', active: false}
       ],
       colors: [
         {val: '187,18,18', active: true},
@@ -100,22 +108,23 @@ export default {
   },
   computed: {
     ...mapState('common', {
-      theme: state => state.theme
+      theme: state => state.theme,
+      lang: state => state.lang
     })
   },
   methods: {
     ...mapMutations('common', [
-      'SET_THEME'
+      'SET_THEME',
+      'SET_LANG'
     ]),
-    checkNavLinks(isMobile,index) {
+    checkNavLinks(isMobile, index) {
       let link = document.querySelector('.router-link-exact-active') || false
       if(link) {
-        if(index) {
+        if(index >= 0) {
           this.links.forEach(item => item.active = false)
           this.links[index].active = true
         } else {
-          let text = link.innerText.trim()
-          this.links.forEach(item => item.title === text ? item.active = true : item.active = false)
+          this.links.forEach(item => item.to === this.$route.path ? item.active = true : item.active = false)
         }
       }
       if(isMobile) this.menuClick()
@@ -131,6 +140,10 @@ export default {
       this.colors.forEach(item => item.active = false)
       this.colors[i].active = true
       this.$root.$emit('setTheme')
+    },
+    changeLanguage() {
+      this.lang === 'en' ? this.SET_LANG('ru') : this.SET_LANG('en');
+      localStorage.setItem('lang', this.lang)
     }
   },
   mounted() {
@@ -141,6 +154,12 @@ export default {
       this.colors.forEach(item => item.val === color ? item.active = true : false)
     } else {
       localStorage.setItem('color', this.theme)
+    }
+    if(localStorage.getItem('lang')) {
+      let lang = localStorage.getItem('lang')
+      this.SET_LANG(lang)
+    } else {
+      localStorage.setItem('lang', this.lang)
     }
 
     this.checkNavLinks()
@@ -211,6 +230,8 @@ export default {
     grid-template-columns: repeat(auto-fit, minmax(0, min-content))
     grid-column-gap: 40px
     align-items: center
+  &__link
+    white-space: nowrap
   &__right
     display: grid
     grid-row-gap: 10px
@@ -227,6 +248,11 @@ export default {
   &__color
     width: 10px
     height: 10px
+    cursor: pointer
+  &__language
+    display: grid
+    justify-items: end
+    font-size: 15px
     cursor: pointer
 
   .mobileMenu-enter, .mobileMenu-leave-to
@@ -257,5 +283,7 @@ export default {
       .header__email
         justify-content: left
       .header__colors
+        justify-content: left
+      .header__language
         justify-content: left
 </style>

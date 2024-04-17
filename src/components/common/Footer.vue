@@ -7,7 +7,7 @@
         class="footer__phrase"
         :style="{color: `rgb(${theme})`}"
       >
-        <div>"Pride is the value of rotten people"</div>
+        <div>{{ lang === 'en' ? `"Pride is the value of rotten people"` : `"Гордость - ценность гнилых людей"` }}</div>
         <div><span>| </span>Incunne</div>
       </div>
     </div>
@@ -17,7 +17,7 @@
     </div>
 
     <div class="footer__rights">
-      <span :style="{color: `rgba(${theme}, .7)`}">All rights</span>reserved
+      <span :style="{color: `rgba(${theme}, .7)`}">{{ lang === 'en' ? 'All rights' : 'Все права' }}</span>{{ lang === 'en' ? 'reserved' : 'защищены' }}
     </div>
 
   </footer>
@@ -33,7 +33,8 @@ export default {
   },
   computed: {
     ...mapState('common', {
-      theme: state => state.theme
+      theme: state => state.theme,
+      lang: state => state.lang
     })
   }
 }

@@ -103,8 +103,6 @@ function setTooltipPosition(el, binding) {
       binding.value.location.slice(1);
     currentTooltip = "locationTooltip" + ending;
     currentTriangle = "locationTriangle" + ending;
-    console.log(currentTooltip);
-    console.log(currentTriangle);
   }
 
   Object.entries(locationsParameters[currentTooltip]).forEach((item) => {
@@ -124,10 +122,16 @@ function setTooltipPosition(el, binding) {
   });
 }
 
+function translateText(el, binding, vnode) {
+  const lang = vnode.context.$store.getters["common/GET_LANG"];
+  tooltip.innerText = binding.value.title[lang];
+  tooltip.append(triangle);
+}
+
 export default {
   bind(el, binding, vnode, prevVnode) {
     el.style.position = "relative";
-    tooltip.innerText = binding.value.title;
+    translateText(el, binding, vnode);
 
     Object.entries(locationsParameters.locationTooltipBase).forEach((item) => {
       tooltip.style[item[0]] = item[1];
@@ -138,7 +142,7 @@ export default {
     setTooltipPosition(el, binding);
   },
   componentUpdated(el, binding, vnode, prevVnode) {
-    console.log("updated");
-    setTooltipPosition(el, binding);
+    setTooltipPosition(el, binding, vnode);
+    translateText(el, binding, vnode);
   },
 };

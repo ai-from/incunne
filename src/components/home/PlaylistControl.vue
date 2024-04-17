@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {mapState, mapMutations} from 'vuex'
+import {mapState, mapMutations, mapActions} from 'vuex'
 import colorScrollbar from "../../mixins/colorScrollbar"
 import Button from "../common/Button"
 export default {
@@ -33,14 +33,26 @@ export default {
       albums: state => state.albums,
       isPlaylistShow: state => state.isPlaylistShow
     }),
+    ...mapState('common', {
+      lang: state => state.lang
+    }),
     btnCreateTitle: {
       get() {
-        return this.isCreatingPlaylist ? 'Delete playlist' : 'Create playlist'
+        if(this.lang === 'en') {
+          return this.isCreatingPlaylist ? 'Delete playlist' : 'Create playlist'
+        } else {
+          return this.isCreatingPlaylist ? 'Удалить плейлист' : 'Создать плейлист'
+        }
       }
     },
     btnVisibleTitle: {
       get() {
-        return this.isPlaylistShow ? 'Hide playlist' : 'Show playlist'
+        if(this.lang === 'en') {
+          return this.isPlaylistShow ? 'Hide playlist' : 'Show playlist'
+        } else {
+          return this.isPlaylistShow ? 'Скрыть плейлист' : 'Показать плейлист'
+        }
+        
       }
     },
     isCreatingPlaylist: {
@@ -57,15 +69,17 @@ export default {
   ],
   methods: {
     ...mapMutations('albums', [
-      'CREATE_PLAYLIST',
       'DELETE_PLAYLIST',
       'SET_PLAYLIST_SHOW'
+    ]),
+    ...mapActions('albums', [
+      'CREATE_PLAYLIST'
     ]),
     playlistAction() {
       if(!this.isCreatingPlaylist) {
         this.CREATE_PLAYLIST()
         let playlist = {
-          title: 'Playlist',
+          title: this.lang === 'en' ? 'Playlist' : 'Плейлист',
           innerTitle: 'playlist',
           year: new Date().getFullYear(),
           songs: []
@@ -111,5 +125,5 @@ export default {
     &__buttons
       grid-template-columns: minmax(min-content, 1fr)
       &.two
-        grid-template-columns: repeat(2, minmax(min-content, 1fr))
+        grid-template-columns: 1fr
 </style>
