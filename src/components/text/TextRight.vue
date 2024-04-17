@@ -2,8 +2,9 @@
   <div class="texts__right"
        :style="{border: `1px solid rgba(${theme}, .3)`}"
   >
-    <div class="song-name"
-         :style="{color: `rgb(${theme})`}"
+    <div
+      class="song-name"
+      :style="{color: `rgb(${theme})`}"
     >
       {{ songName }}
     </div>
@@ -62,7 +63,10 @@ export default {
       }
     },
     up() {
-      document.querySelector('.scroll-up').scrollTo({top: 0, left: 0, behavior: 'smooth'})
+      document.querySelector('.scroll-up').scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    },
+    scrollText() {
+      document.querySelector('.texts__right').scrollIntoView({behavior: 'smooth'});
     }
   },
   created() {
@@ -85,6 +89,7 @@ export default {
   mounted() {
     this.$root.$on('chooseText', obj => {
       this.showCurrentText(obj.albumIndex, obj.songIndex)
+      this.scrollText()
     })
   }
 }
