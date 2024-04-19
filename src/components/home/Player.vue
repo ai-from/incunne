@@ -152,14 +152,18 @@
             v-show="false"
           ></a>
 
-          <div class="player__share-wrap">
+          <div
+            class="player__share-wrap"
+            v-tooltip="{
+              title: isCopied ? {ru: 'Скопировано', en: 'Copied'} : {ru: 'Скопировать в буфер обмена: W', en: 'Copy to clipboard: W'},
+              location: tooltipLocation.share
+            }"
+          >
             <SVGIcon
               class="player__share"
               :class="{player__share_hide: this.isCopied}"
               cssPosition="absolute"
               iconName="share"
-              :tooltipText="lang === 'en' ? 'Copy to clipboard: W': 'Скопировать в буфер обмена: W'"
-              :tooltipLocation="tooltipLocation.share"
               :color="`rgb(${theme})`"
               @click="copyLink"
             />
@@ -168,8 +172,6 @@
               :class="{player__copied_show: this.isCopied}"
               cssPosition="absolute"
               iconName="copied"
-              :tooltipText="lang === 'en' ? 'Copied' : 'Скопировано'"
-              :tooltipLocation="tooltipLocation.copied"
               :color="`rgb(${theme})`"
             /> 
           </div>
@@ -183,7 +185,7 @@
             v-tooltip="{
               title: {ru: 'Громкость: Стрелка вверх | Стрелка вниз', en: 'Volume: ArrowUp | ArrowDown'},
               location: tooltipLocation.volume
-              }"
+            }"
           >
             <div
               ref="playerVolumeColored"
@@ -257,7 +259,6 @@ export default {
         queue: 'left',
         download: 'left',
         share: 'left',
-        copied: 'left',
         volume: 'left'
       }
     };

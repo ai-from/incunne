@@ -2,8 +2,6 @@ const grey = "#dbdbdb";
 const locations = ["left", "right", "top", "bottom"];
 let currentTooltip = null;
 let currentTriangle = null;
-const tooltip = document.createElement("span");
-const triangle = document.createElement("i");
 
 const locationsParameters = {
   locationTooltipBase: {
@@ -96,6 +94,21 @@ const locationsParameters = {
   },
 };
 
+function setBaseAttrs(el) {
+  const tooltip = document.createElement("span");
+  const triangle = document.createElement("i");
+  el.style.position = "relative";
+  el.tooltip = tooltip;
+  el.triangle = triangle;
+
+  Object.entries(locationsParameters.locationTooltipBase).forEach((item) => {
+    el.tooltip.style[item[0]] = item[1];
+  });
+  Object.entries(locationsParameters.locationTriangleBase).forEach((item) => {
+    el.triangle.style[item[0]] = item[1];
+  });
+}
+
 function setTooltipPosition(el, binding) {
   if (locations.includes(binding.value.location)) {
     let ending =
@@ -106,43 +119,33 @@ function setTooltipPosition(el, binding) {
   }
 
   Object.entries(locationsParameters[currentTooltip]).forEach((item) => {
-    tooltip.style[item[0]] = item[1];
+    el.tooltip.style[item[0]] = item[1];
   });
   Object.entries(locationsParameters[currentTriangle]).forEach((item) => {
-    triangle.style[item[0]] = item[1];
-  });
-  tooltip.append(triangle);
-  el.append(tooltip);
-
-  el.addEventListener("mouseenter", () => {
-    tooltip.style.display = "flex";
-  });
-  el.addEventListener("mouseleave", () => {
-    tooltip.style.display = "none";
+    el.triangle.style[item[0]] = item[1];
   });
 }
 
 function translateText(el, binding, vnode) {
   const lang = vnode.context.$store.getters["common/GET_LANG"];
-  tooltip.innerText = binding.value.title[lang];
-  tooltip.append(triangle);
+  el.tooltip.innerText = binding.value.title[lang];
+  el.tooltip.append(el.triangle);
 }
 
 export default {
-  bind(el, binding, vnode, prevVnode) {
-    el.style.position = "relative";
-    translateText(el, binding, vnode);
-
-    Object.entries(locationsParameters.locationTooltipBase).forEach((item) => {
-      tooltip.style[item[0]] = item[1];
-    });
-    Object.entries(locationsParameters.locationTriangleBase).forEach((item) => {
-      triangle.style[item[0]] = item[1];
-    });
+  bind(el, binding, vnode) {
+    setBaseAttrs(el);
     setTooltipPosition(el, binding);
+    translateText(el, binding, vnode);
+    el.append(el.tooltip);
+    el.addEventListener("mouseenter", () => {
+      el.tooltip.style.display = "flex";
+    });
+    el.addEventListener("mouseleave", () => {
+      el.tooltip.style.display = "none";
+    });
   },
-  componentUpdated(el, binding, vnode, prevVnode) {
-    setTooltipPosition(el, binding, vnode);
+  componentUpdated(el, binding, vnode) {
     translateText(el, binding, vnode);
   },
 };

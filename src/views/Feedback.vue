@@ -6,7 +6,7 @@
       <div class="feedback__links">
         <a
           class="feedback__link"
-          v-for="(link, index) in links"
+          v-for="(link, index) in links.filter(item => !removeList.includes(item.innerName))"
           :key="index"
           :href="link.href"
           :alt="link.alt"
@@ -50,6 +50,11 @@ export default {
         {name: 'Telegram', innerName: 'telegram', href: 'https://t.me/incunne', alt: 'Incunne | Telegram', title: 'Incunne | Telegram', isHover: false},
         {name: 'Instagram', innerName: 'instagram', href: 'https://instagram.com/hughes.stanley?r=nametag', alt: 'Incunne | Instagram', title: 'Incunne | Instagram', isHover: false},
         {name: 'Spotify', innerName: 'spotify', href: 'https://open.spotify.com/artist/3Wv8c01VRYuqn2Cwj02SGK', alt: 'Incunne | Spotify', title: 'Incunne | Spotify', isHover: false}
+      ],
+      removeList: [
+        'promo-dj',
+        'instagram',
+        'spotify'
       ]
     }
   },
