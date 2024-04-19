@@ -155,7 +155,7 @@
           <div
             class="player__share-wrap"
             v-tooltip="{
-              title: isCopied ? {ru: 'Скопировано', en: 'Copied'} : {ru: 'Скопировать в буфер обмена: W', en: 'Copy to clipboard: W'},
+              title: isCopied ? {ru: 'Скопировано', en: 'Copied'} : {ru: 'Скопировать ссылку: W', en: 'Copy to clipboard: W'},
               location: tooltipLocation.share
             }"
           >
