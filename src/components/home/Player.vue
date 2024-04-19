@@ -578,7 +578,6 @@ export default {
         this.tooltipLocation.queue = 'bottom';
         this.tooltipLocation.download = 'bottom';
         this.tooltipLocation.share = 'bottom';
-        this.tooltipLocation.copied = 'bottom';
         this.tooltipLocation.volume = 'bottom';
       } else {
         this.tooltipLocation.prevSong = 'right';
@@ -592,7 +591,6 @@ export default {
         this.tooltipLocation.queue = 'left';
         this.tooltipLocation.download = 'left';
         this.tooltipLocation.share = 'left';
-        this.tooltipLocation.copied = 'left';
         this.tooltipLocation.volume = 'left';
       }
     }

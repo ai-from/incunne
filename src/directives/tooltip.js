@@ -147,5 +147,6 @@ export default {
   },
   componentUpdated(el, binding, vnode) {
     translateText(el, binding, vnode);
+    setTooltipPosition(el, binding);
   },
 };
