@@ -144,7 +144,6 @@ export default {
     changeLanguage() {
       this.lang === 'en' ? this.SET_LANG('ru') : this.SET_LANG('en');
       localStorage.setItem('lang', this.lang)
-      this.$root.$emit('changeLanguage');
     }
   },
   mounted() {
