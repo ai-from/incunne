@@ -140,6 +140,9 @@ export default {
     el.append(el.tooltip);
     el.addEventListener("mouseenter", () => {
       el.tooltip.style.display = "flex";
+      setTimeout(() => {
+        el.tooltip.style.display = "none";
+      }, 2000);
     });
     el.addEventListener("mouseleave", () => {
       el.tooltip.style.display = "none";

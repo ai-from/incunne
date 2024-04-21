@@ -8,7 +8,7 @@
             xmlns="http://www.w3.org/2000/svg"
             :class="[...classes]"
             @click="$emit('click')"
-            ref="svg"
+            ref="SVGIcon"
         >
             <template v-if="content.path">
                 <path
@@ -54,6 +54,7 @@
         <div
             v-if="tooltipText"
             :class="['tooltip', tooltipLocation ? `tooltip__${tooltipLocation}` : 'tooltip__right']"
+            ref="SVGIconTooltip"
         >
             {{ tooltipText }}
         </div>
@@ -109,7 +110,7 @@ export default {
     },
     methods: {
         colorSVGContent() {
-            const children = this.$refs.svg.children;
+            const children = this.$refs.SVGIcon.children;
             children.forEach(child => {
                 if(child.hasAttribute('stroke-width')) {
                     child.setAttribute('stroke', this.color);
@@ -126,6 +127,19 @@ export default {
     },
     mounted() {
         this.colorSVGContent();
+        if(this.tooltipText) {
+            this.$refs.SVGIcon.addEventListener('mouseenter', () => {
+                if(!this.$refs.SVGIcon.classList.contains('disabled')) {
+                    this.$refs.SVGIconTooltip.style.display = 'block';
+                    setTimeout(() => {
+                        this.$refs.SVGIconTooltip.style.display = 'none';
+                    }, 2000);
+                }   
+            });
+            this.$refs.SVGIcon.addEventListener('mouseleave', () => {
+                this.$refs.SVGIconTooltip.style.display = 'none';
+            });
+        }   
     },
     updated() {
         this.colorSVGContent();
@@ -145,7 +159,10 @@ export default {
             cursor: default
     svg:not(.disabled):hover
             + .tooltip
-                display: block
+                // display: block
+    &.player__copied_show
+        .tooltip
+            display: block !important
     .tooltip
         position: absolute
         background: rgb(46, 46, 46)

@@ -152,12 +152,12 @@
             v-show="false"
           ></a>
 
-          <div
-            class="player__share-wrap"
-            v-tooltip="{
+          <!-- v-tooltip="{
               title: isCopied ? {ru: 'Скопировано', en: 'Copied'} : {ru: 'Скопировать ссылку: W', en: 'Copy to clipboard: W'},
               location: tooltipLocation.share
-            }"
+            }" -->
+          <div
+            class="player__share-wrap"
           >
             <SVGIcon
               class="player__share"
@@ -165,6 +165,8 @@
               cssPosition="absolute"
               iconName="share"
               :color="`rgb(${theme})`"
+              :tooltipText="lang === 'en' ? 'Copy to clipboard: W' : 'Скопировать ссылку: W'"
+              :tooltipLocation="tooltipLocation.share"
               @click="copyLink"
             />
             <SVGIcon
@@ -173,6 +175,8 @@
               cssPosition="absolute"
               iconName="copied"
               :color="`rgb(${theme})`"
+              :tooltipText="lang === 'en' ? 'Copied' : 'Скопировано'"
+              :tooltipLocation="tooltipLocation.copied"
             /> 
           </div>
         </div>
@@ -259,6 +263,7 @@ export default {
         queue: 'left',
         download: 'left',
         share: 'left',
+        copied: 'left',
         volume: 'left'
       }
     };
@@ -407,7 +412,7 @@ export default {
             this.isCopied = true;
             setTimeout(() => {
               this.isCopied = false;
-            }, 3000);
+            }, 2000);
           })
           .catch((err) => {
             alert("Что-то пошло не так");
@@ -578,6 +583,7 @@ export default {
         this.tooltipLocation.queue = 'bottom';
         this.tooltipLocation.download = 'bottom';
         this.tooltipLocation.share = 'bottom';
+        this.tooltipLocation.copied = 'bottom';
         this.tooltipLocation.volume = 'bottom';
       } else {
         this.tooltipLocation.prevSong = 'right';
@@ -591,6 +597,7 @@ export default {
         this.tooltipLocation.queue = 'left';
         this.tooltipLocation.download = 'left';
         this.tooltipLocation.share = 'left';
+        this.tooltipLocation.copied = 'left';
         this.tooltipLocation.volume = 'left';
       }
     }
@@ -923,7 +930,7 @@ export default {
     transform: translate(-50%, -50%) scale(1)
     cursor: pointer
     opacity: 1
-    transition: all linear .25s
+    // transition: all linear .25s
     &_hide
       opacity: 0
       transform: translate(-50%, -50%) scale(0)
@@ -936,7 +943,7 @@ export default {
     &_show
       opacity: 1
       transform: translate(-50%, -50%) scale(1)
-      transition: all linear .25s
+      // transition: all linear .25s
   &__volume-wrapper
     display: grid
     grid-template-rows: repeat(2, min-content)
