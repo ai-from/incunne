@@ -171,7 +171,9 @@
               cssPosition="absolute"
               iconName="copied"
               :color="`rgb(${theme})`"
-              :tooltipText="lang === 'en' ? 'Copied' : 'Скопировано'"
+              :tooltipText="mobile ? 
+              lang === 'en' ?  tooltipTextCopied.mobile.en : tooltipTextCopied.mobile.ru :
+              lang === 'en' ?  tooltipTextCopied.desktop.en : tooltipTextCopied.desktop.ru"
               :tooltipLocation="tooltipLocation.copied"
             /> 
           </div>
@@ -246,6 +248,17 @@ export default {
       volumeDrag: false,
       lineNewPosition: 0,
       volumeNewPosition: 0,
+      tooltipTextCopied: {
+        desktop: {
+          ru: 'Скопировано',
+          en: 'Copied'
+        },
+        mobile: {
+          ru: 'Ссылка скопирована',
+          en: 'Link copied'
+        }
+      },
+      mobile: null,
       tooltipLocation: {
         mode: 'right',
         prevSong: 'right',
@@ -565,6 +578,11 @@ export default {
         }
       }
     },
+    isMobile() {
+      const width = document.body.clientWidth;
+      if(width <= 900) this.mobile = true
+      else this.mobile = false
+    },
     setTooltipPosition() {
       const width = document.body.clientWidth;
       if(width <= 900) {
@@ -798,9 +816,12 @@ export default {
 
     this.setTooltipPosition();
 
+    this.isMobile();
+
     window.addEventListener("resize", () => {
       this.getVolumeDir();
       this.setTooltipPosition();
+      this.isMobile();
     });
   },
   beforeDestroy() {
