@@ -47,14 +47,16 @@ export default {
         {name: 'RealMusic', innerName: 'real-music', href: 'https://www.realrocks.ru/incunne/', alt: 'Incunne | RealMusic', title: 'Incunne | RealMusic', isHover: false},
         {name: 'PromoDj', innerName: 'promo-dj', href: 'https://promodj.com/incunne', alt: 'Incunne | PromoDj', title: 'Incunne | PromoDj', isHover: false},
         {name: 'YouTube', innerName: 'youtube', href: 'https://www.youtube.com/user/Incunne', alt: 'Incunne | YouTube', title: 'Incunne | YouTube', isHover: false},
-        {name: 'Telegram', innerName: 'telegram', href: 'https://t.me/incunne', alt: 'Incunne | Telegram', title: 'Incunne | Telegram', isHover: false},
+        {name: 'Telegram', innerName: 'telegram', href: 'https://t.me/aifrom', alt: 'Incunne | Telegram', title: 'Incunne | Telegram', isHover: false},
         {name: 'Instagram', innerName: 'instagram', href: 'https://instagram.com/hughes.stanley?r=nametag', alt: 'Incunne | Instagram', title: 'Incunne | Instagram', isHover: false},
         {name: 'Spotify', innerName: 'spotify', href: 'https://open.spotify.com/artist/3Wv8c01VRYuqn2Cwj02SGK', alt: 'Incunne | Spotify', title: 'Incunne | Spotify', isHover: false}
       ],
       removeList: [
         'promo-dj',
         'instagram',
-        'spotify'
+        'spotify',
+        'sound-cloud',
+        'youtube'
       ]
     }
   },
