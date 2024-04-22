@@ -63,10 +63,10 @@ export default {
       }
     },
     up() {
-      document.querySelector('.scroll-up').scrollTo({top: 0, left: 0, behavior: 'smooth'});
+      document.querySelector('.scroll-up').scrollIntoView({behavior: 'smooth', block: 'start'});
     },
     scrollText() {
-      document.querySelector('.texts__right').scrollTo({top: 0, left: 0, behavior: 'smooth'});
+      document.querySelector('.texts__right').scrollIntoView({behavior: 'smooth', block: 'start'});
     }
   },
   created() {
