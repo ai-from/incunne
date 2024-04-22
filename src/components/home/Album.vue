@@ -232,24 +232,24 @@ export default {
     },
     downloadAlbum() {
       if (!this.isPlaylistChanging) {
-        this.btnDownloadTitle = "Preparing...";
+        this.btnDownloadTitle = {ru: 'Скачиваю...', en: 'Downloading...'};
         let innerAlbum = this.album.innerTitle;
         let album = this.album.title;
         let count = 0;
         let zip = new JSZip();
 
         this.album.songs.forEach((song) => {
+          if (album === "Playlist" || album === "Плейлист") innerAlbum = song.fromAlbum;
           let innerSong = song.innerTitle;
-          if (album === "Playlist") innerAlbum = song.fromAlbum;
           let src = require(`./../../../public/albums/${innerAlbum}/Incunne_${innerSong}.mp3`);
           JSZipUtils.getBinaryContent(src, (err, data) => {
             zip.file(`Incunne - ${innerSong}.mp3`, data, { binary: true });
             count++;
             if (count === this.album.songs.length) {
               zip.generateAsync({ type: "blob" }).then((cnt) => {
-                this.btnDownloadTitle = "Download";
+                this.btnDownloadTitle = {ru: 'Скачать', en: 'Download'};
                 saveAs(cnt, `Incunne - ${album}.zip`);
-              });
+              }).catch(err => alert(lang === 'en' ? 'Something went wrong' : 'Что-то пошло не так'))
             }
           });
         });
