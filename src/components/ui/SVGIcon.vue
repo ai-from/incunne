@@ -110,14 +110,16 @@ export default {
     },
     methods: {
         colorSVGContent() {
-            const children = this.$refs.SVGIcon.children;
-            children.forEach(child => {
-                if(child.hasAttribute('stroke-width')) {
-                    child.setAttribute('stroke', this.color);
-                } else {
-                    child.setAttribute('fill', this.color);
-                }
-            })
+            if(this.$refs.SVGIcon) {
+                const children = this.$refs.SVGIcon.children;
+                children.forEach(child => {
+                    if(child.hasAttribute('stroke-width')) {
+                        child.setAttribute('stroke', this.color);
+                    } else {
+                        child.setAttribute('fill', this.color);
+                    }
+                })
+            }
         }
     },
     watch: {
@@ -127,7 +129,7 @@ export default {
     },
     mounted() {
         this.colorSVGContent();
-        if(this.tooltipText) {
+        if(this.tooltipText && this.$refs.SVGIcon) {
             this.$refs.SVGIcon.addEventListener('mouseenter', () => {
                 if(!this.$refs.SVGIcon.classList.contains('disabled')) {
                     this.$refs.SVGIconTooltip.style.display = 'block';

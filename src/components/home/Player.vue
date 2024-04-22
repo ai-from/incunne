@@ -152,10 +152,6 @@
             v-show="false"
           ></a>
 
-          <!-- v-tooltip="{
-              title: isCopied ? {ru: 'Скопировано', en: 'Copied'} : {ru: 'Скопировать ссылку: W', en: 'Copy to clipboard: W'},
-              location: tooltipLocation.share
-            }" -->
           <div
             class="player__share-wrap"
           >
@@ -208,7 +204,7 @@
               ></div>
             </div>
           </div>
-          <div class="player__volume-percent" :style="{ color: `rgb(${theme})` }">
+          <div v-if="false" class="player__volume-percent" :style="{ color: `rgb(${theme})` }">
             {{ this.volumeColored.toFixed() }}%
           </div>
         </div>
