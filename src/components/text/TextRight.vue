@@ -63,7 +63,7 @@ export default {
       }
     },
     up() {
-      document.querySelector('.scroll-up').scrollIntoView({behavior: 'smooth', block: 'start'});
+      document.querySelector('.scroll-up').scrollTo({top: 0, left: 0, behavior: 'smooth'});
     },
     scrollText() {
       document.querySelector('.texts__right').scrollIntoView({behavior: 'smooth', block: 'start'});
