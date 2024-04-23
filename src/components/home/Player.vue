@@ -61,7 +61,11 @@
       </div>
 
       <div class="player__center">
-        <div class="player__title" :style="{ color: `rgb(${theme})` }">
+        <div
+          class="player__title"
+          :style="{ color: `rgb(${theme})` }"
+          ref="songTitle"
+        >
           {{ songTitle ? `${songTitle}` : lang === 'en' ? 'Choose a song' : 'Выберите песню' }}
         </div>
 
@@ -223,7 +227,7 @@
               ></div>
             </div>
           </div>
-          <div v-if="false" class="player__volume-percent" :style="{ color: `rgb(${theme})` }">
+          <div class="player__volume-percent" :style="{ color: `rgb(${theme})` }">
             {{ this.volumeColored.toFixed() }}%
           </div>
         </div>
@@ -310,17 +314,30 @@ export default {
     playerClick() {
       this.SET_IS_PLAYER_ACTIVE(true);
     },
+    needSong() {
+      let ms = 500
+      let times = 2
+      for(let i = 1; i <= times; i++) {
+        let whatToDo = null
+        if(i % 2) whatToDo = 'add'
+        else whatToDo = 'remove'
+        setTimeout(() => {
+          this.$refs.songTitle.classList[whatToDo]('changed');
+          this.$refs.playerWrapper.classList[whatToDo]('changed');
+        }, (i - 1) * ms)
+      }
+    },
     playClick() {
       if (this.audio.duration) {
         this.isPaused = false;
         this.audio.play();
-      }
+      } else this.needSong();
     },
     pauseClick() {
       if (this.audio.duration) {
         this.isPaused = true;
         this.audio.pause();
-      }
+      } else this.needSong();
     },
     prevClick() {
       if (this.audio.duration) {
@@ -340,7 +357,7 @@ export default {
           this.albumIndex,
           this.songIndex
         ).downloadName;
-      }
+      } else this.needSong();
     },
     nextClick() {
       if (this.audio.duration) {
@@ -360,7 +377,7 @@ export default {
           this.albumIndex,
           this.songIndex
         ).downloadName;
-      }
+      } else this.needSong();
     },
     lineClick($event) {
       if (this.audio.duration) {
@@ -383,7 +400,7 @@ export default {
 
         this.lineColored = percent;
         this.audio.currentTime = (this.audio.duration / 100) * percent;
-      }
+      } else this.needSong();
     },
     lineCircleMousedown() {
       if (this.audio && this.audio.duration) {
@@ -393,38 +410,38 @@ export default {
     timeBack() {
       if (this.audio.duration) {
         this.audio.currentTime -= this.timeStep;
-      }
+      } else this.needSong();
     },
     timeForward() {
       if (this.audio.duration) {
         this.audio.currentTime += this.timeStep;
-      }
+      } else this.needSong();
     },
     repeatClick() {
       if (this.audio && this.audio.duration) {
         this.isRepeat = !this.isRepeat;
         this.isQueue = false;
         this.isMix = false;
-      }
+      } else this.needSong();
     },
     mixClick() {
       if (this.audio && this.audio.duration) {
         this.isMix = !this.isMix;
         this.isRepeat = false;
         this.isQueue = false;
-      }
+      } else this.needSong();
     },
     queueClick() {
       if (this.audio && this.audio.duration) {
         this.isQueue = !this.isQueue;
         this.isRepeat = false;
         this.isMix = false;
-      }
+      } else this.needSong();
     },
     downloadClick() {
       if (this.audio && this.audio.duration && this.downloadSrc && this.downloadName) {
         this.$refs.downloadLink.click();
-      }
+      } else this.needSong();
     },
     copyLink() {
       if (this.audio && this.audio.duration) {
@@ -443,9 +460,7 @@ export default {
           .catch((err) => {
             alert("Что-то пошло не так");
           });
-      } else {
-        return false;
-      }
+      } else this.needSong();
     },
     volumeClick($event) {
       if (this.audio.duration) {
@@ -493,7 +508,7 @@ export default {
           this.volumeColored = percent;
           this.audio.volume = percent / 100;
         }
-      }
+      } else this.needSong();
     },
     volumeCircleMouseDown() {
       if (this.audio && this.audio.duration) {
@@ -865,6 +880,8 @@ export default {
     grid-column-gap: 30px
     align-items: center
     position: relative
+    &.changed
+      border-color: rgba($grey, .3) !important
   &__left
     height: 36px
     display: grid
@@ -893,6 +910,8 @@ export default {
     align-items: center
   &__title
     user-select: none
+    &.changed
+      color: rgba($grey, .3) !important
   &__line
     width: 427px
     height: 4px
