@@ -4,7 +4,7 @@
       <div class="inner-layout__wrapper common-layout-class">
         <Header @mobileClick="mobileClick" />
         <Logo :mini="isMiniLogo" />
-        <BreadCrumbs />
+        <BreadCrumbs :class="{hidden: !isVisibleBlock}" />
         <Player :class="{hidden: !isVisibleBlock}" />
         <router-view :class="{hidden: !isVisibleBlock}" />
         <Footer :class="{hidden: !isVisibleBlock}" />
