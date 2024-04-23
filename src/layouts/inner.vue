@@ -4,6 +4,7 @@
       <div class="inner-layout__wrapper common-layout-class">
         <Header @mobileClick="mobileClick" />
         <Logo :mini="isMiniLogo" />
+        <BreadCrumbs />
         <Player :class="{hidden: !isVisibleBlock}" />
         <router-view :class="{hidden: !isVisibleBlock}" />
         <Footer :class="{hidden: !isVisibleBlock}" />
@@ -18,6 +19,7 @@ import setBg from "../mixins/setBg"
 import colorScrollbar from "../mixins/colorScrollbar"
 import Header from "../components/common/Header"
 import Logo from "../components/common/Logo"
+import BreadCrumbs from '../components/BreadCrumbs.vue'
 import Player from "../components/home/Player"
 import Footer from "../components/common/Footer"
 export default {
@@ -31,6 +33,7 @@ export default {
   components: {
     Header,
     Logo,
+    BreadCrumbs,
     Player,
     Footer
   },
