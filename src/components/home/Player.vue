@@ -19,6 +19,7 @@
       <div class="player__left">
         <SVGIcon
           class="player__prev"
+          :classes="[{default: !songTitle}]"
           iconName="prevSong"
           :tooltipText="lang === 'en' ? 'Previous: Ctrl + ArrowLeft' : 'Предыдущий | Ctrl + Стрелка влево'"
           :tooltipLocation="tooltipLocation.prevSong"
@@ -28,6 +29,7 @@
 
         <SVGIcon
           class="player__play"
+          :classes="[{default: !songTitle}]"
           iconName="play"
           :tooltipText="lang === 'en' ? 'Play: Space' : 'Воспроизвести | Пробел'"
           :tooltipLocation="tooltipLocation.play"
@@ -38,6 +40,7 @@
 
         <SVGIcon
           class="player__pause"
+          :classes="[{default: !songTitle}]"
           iconName="pause"
           :tooltipText="lang === 'en' ? 'Pause: Space' : 'Пауза | Пробел'"
           :tooltipLocation="tooltipLocation.pause"
@@ -48,6 +51,7 @@
 
         <SVGIcon
           class="player__next"
+          :classes="[{default: !songTitle}]"
           iconName="nextSong"
           :tooltipText="lang === 'en' ? 'Next: Ctrl + ArrowRight' : 'Следующий | Ctrl + Стрелка вправо'"
           :tooltipLocation="tooltipLocation.nextSong"
@@ -86,6 +90,7 @@
           <div class="player__time-move">
             <SVGIcon
               class="player__time-back"
+              :classes="[{default: !songTitle}]"
               iconName="timeBack"
               :tooltipText="lang === 'en' ? 'Time back: ArrowLeft' : 'Время назад: Стрелка влево'"
               :tooltipLocation="tooltipLocation.timeBack"
@@ -95,6 +100,7 @@
 
             <SVGIcon
               class="player__time-forward"
+              :classes="[{default: !songTitle}]"
               iconName="timeForward"
               :tooltipText="lang === 'en' ? 'Time forward: ArrowRight' : 'Время вперед | Стрелка вправо'"
               :tooltipLocation="tooltipLocation.timeForward"
@@ -111,6 +117,7 @@
         <div class="player__right-buttons">
           <SVGIcon
             class="player__repeat"
+            :classes="[{default: !songTitle}]"
             iconName="repeat"
             :tooltipText="lang === 'en' ? 'Repeat: A' : 'Повторить: A'"
             :tooltipLocation="tooltipLocation.repeat"
@@ -120,6 +127,7 @@
 
           <SVGIcon
             class="player__mix"
+            :classes="[{default: !songTitle}]"
             iconName="mix"
             :tooltipText="lang === 'en' ? 'Mix: S' : 'Перемешать: S'"
             :tooltipLocation="tooltipLocation.mix"
@@ -129,6 +137,7 @@
 
           <SVGIcon
             class="player__queue"
+            :classes="[{default: !songTitle}]"
             iconName="queue"
             :tooltipText="lang === 'en' ? 'Queue: Z' : 'По очереди: Z'"
             :tooltipLocation="tooltipLocation.queue"
@@ -138,6 +147,7 @@
 
           <SVGIcon
             class="player__download"
+            :classes="[{default: !songTitle}]"
             iconName="download"
             :tooltipText="lang === 'en' ? 'Download: X' : 'Скачать: X'"
             :tooltipLocation="tooltipLocation.download"
@@ -158,6 +168,7 @@
             <SVGIcon
               class="player__share"
               :class="{player__share_hide: this.isCopied}"
+              :classes="[{default: !songTitle}]"
               cssPosition="absolute"
               iconName="share"
               :color="`rgb(${theme})`"
@@ -167,7 +178,7 @@
             />
             <SVGIcon
               class="player__copied"
-              :class="{player__copied_show: this.isCopied}"
+              :class="{player__copied_show: this.isCopied, default: !songTitle}"
               cssPosition="absolute"
               iconName="copied"
               :color="`rgb(${theme})`"
@@ -182,6 +193,7 @@
         <div class="player__volume-wrapper">
           <div
             class="player__volume"
+            :class="{default: !songTitle}"
             @click="volumeClick"
             ref="playerVolume"
             v-tooltip="{
@@ -974,6 +986,8 @@ export default {
     position: relative
     cursor: pointer
     user-select: none
+    &.default
+      cursor: default
   &__volume-colored
     position: absolute
     left: 0

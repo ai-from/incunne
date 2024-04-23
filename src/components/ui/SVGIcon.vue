@@ -157,14 +157,13 @@ export default {
     &.absolute
         position: absolute
     svg
-        &.disabled
+        &.disabled, &.default
             cursor: default
-    svg:not(.disabled):hover
-            + .tooltip
-                // display: block
     &.player__copied_show
         .tooltip
             display: block !important
+    &.default
+        cursor: pointer
     .tooltip
         position: absolute
         background: rgb(46, 46, 46)
