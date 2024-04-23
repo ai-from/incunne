@@ -65,7 +65,12 @@
           {{ songTitle ? `${songTitle}` : lang === 'en' ? 'Choose a song' : 'Выберите песню' }}
         </div>
 
-        <div class="player__line" @click="lineClick" ref="playerLine">
+        <div
+          class="player__line"
+          :class="{default: !songTitle}"
+          @click="lineClick"
+          ref="playerLine"
+        >
           <div
             class="player__line-colored"
             ref="playerLineColored"
@@ -895,6 +900,8 @@ export default {
     position: relative
     cursor: pointer
     user-select: none
+    &.default
+      cursor: default
   &__line-colored
     position: absolute
     left: 0
