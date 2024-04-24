@@ -122,7 +122,10 @@
         </div>
       </div>
 
-      <div class="player__right">
+      <div
+        class="player__right"
+        :class="{safari: isSafari}"
+      >
         <div class="player__right-buttons">
           <SVGIcon
             class="player__repeat"
@@ -199,7 +202,10 @@
           </div>
         </div>
 
-        <div class="player__volume-wrapper">
+        <div
+          class="player__volume-wrapper"
+          v-if="!isSafari"
+        >
           <div
             class="player__volume"
             :class="{default: !songTitle}"
@@ -223,7 +229,7 @@
                 class="player__volume-circle"
                 :style="{ background: `rgb(${theme})` }"
                 ref="playerVolumeCircle"
-                @mousedown="volumeCircleMouseDown"
+                @mousedown="volumeCircleMousedown"
               ></div>
             </div>
           </div>
@@ -269,6 +275,7 @@ export default {
       volumeDrag: false,
       lineNewPosition: 0,
       volumeNewPosition: 0,
+      isSafari: null,
       tooltipTextCopied: {
         desktop: {
           ru: 'Скопировано',
@@ -510,7 +517,7 @@ export default {
         }
       } else this.needSong();
     },
-    volumeCircleMouseDown() {
+    volumeCircleMousedown() {
       if (this.audio && this.audio.duration) {
         this.volumeDrag = true;
       }
@@ -646,9 +653,18 @@ export default {
         this.tooltipLocation.copied = 'left';
         this.tooltipLocation.volume = 'left';
       }
+    },
+    isSafariCheck() {
+      let res = false;
+      if(window.safari !== undefined) res = true;
+      const userAgent = window.navigator.userAgent;
+      const iOS = !!userAgent.match(/iPad/i) || !!userAgent.match(/iPhone/i);
+      if(iOS) res = true
+      this.isSafari = true;
     }
   },
   mounted() {
+    this.isSafariCheck();
     this.audio = new Audio();
 
     this.$root.$on("chooseSong", (obj) => {
@@ -956,6 +972,10 @@ export default {
     grid-template-columns: repeat(2, min-content)
     grid-column-gap: 30px
     align-items: center
+    &.safari
+      grid-template-columns: 1fr
+      grid-column-gap: unset
+      grid-row-gap: unset
   &__right-buttons
     display: grid
     grid-template-columns: repeat(2, min-content)
