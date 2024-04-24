@@ -88,6 +88,7 @@
               :style="{ background: `rgb(${theme})` }"
               ref="playerLineCircle"
               @mousedown="lineCircleMousedown"
+              @touchstart="lineCircleMousedown"
             ></div>
           </div>
         </div>
@@ -230,6 +231,7 @@
                 :style="{ background: `rgb(${theme})` }"
                 ref="playerVolumeCircle"
                 @mousedown="volumeCircleMousedown"
+                @touchstart="volumeCircleMousedown"
               ></div>
             </div>
           </div>
@@ -276,6 +278,7 @@ export default {
       lineNewPosition: 0,
       volumeNewPosition: 0,
       isSafari: null,
+      isAndroid: null,
       tooltipTextCopied: {
         desktop: {
           ru: 'Скопировано',
@@ -555,11 +558,13 @@ export default {
       };
       if (direction) {
         let val = 0;
-        if (e.pageX - playerLeftMargin < limits.left) {
+        let deviceX = this.isAndroid ? e.targetTouches[0].pageX : e.pageX;
+
+        if (deviceX - playerLeftMargin < limits.left) {
           val = -handler.offsetWidth / 2;
-        } else if (e.pageX - playerLeftMargin <= limits.right) {
-          val = e.pageX - playerLeftMargin - limits.left - handler.offsetWidth / 2;
-        } else if (e.pageX - playerLeftMargin > limits.right) {
+        } else if (deviceX - playerLeftMargin <= limits.right) {
+          val = deviceX - playerLeftMargin - limits.left - handler.offsetWidth / 2;
+        } else if (deviceX - playerLeftMargin > limits.right) {
           val = limits.right - limits.left - handler.offsetWidth / 2;
         }
         handler.style.left = val + "px";
@@ -569,15 +574,16 @@ export default {
         this.changingTime = this.convertMilliSeconds(this.lineNewPosition);
       } else {
         let val = 0;
+        let deviceY = this.isAndroid ? e.targetTouches[0].pageY : e.pageY;
         if (this.volumeDir) {
-          if (e.pageY + scrolled - playerTopMargin > limits.bottom) {
+          if (deviceY + scrolled - playerTopMargin > limits.bottom) {
             val = -handler.offsetHeight / 2;
-          } else if (e.pageY + scrolled - playerTopMargin >= limits.top) {
+          } else if (deviceY + scrolled - playerTopMargin >= limits.top) {
             val =
               limits.bottom -
-              (e.pageY + scrolled - playerTopMargin) -
+              (deviceY + scrolled - playerTopMargin) -
               handler.offsetHeight / 2;
-          } else if (e.pageY + scrolled - playerTopMargin < limits.top) {
+          } else if (deviceY + scrolled - playerTopMargin < limits.top) {
             val = container.offsetHeight - handler.offsetHeight / 2;
           }
           handler.style.top = "unset";
@@ -587,11 +593,12 @@ export default {
           this.volumeNewPosition = percent / 100;
           this.audio.volume = this.volumeNewPosition;
         } else {
-          if (e.pageX - playerLeftMargin < limits.left) {
+          let deviceX = this.isAndroid ? e.targetTouches[0].pageX : e.pageX;
+          if (deviceX - playerLeftMargin < limits.left) {
             val = -handler.offsetWidth / 2;
-          } else if (e.pageX - playerLeftMargin <= limits.right) {
-            val = e.pageX - playerLeftMargin - limits.left - handler.offsetWidth / 2;
-          } else if (e.pageX - playerLeftMargin > limits.right) {
+          } else if (deviceX - playerLeftMargin <= limits.right) {
+            val = deviceX - playerLeftMargin - limits.left - handler.offsetWidth / 2;
+          } else if (deviceX - playerLeftMargin > limits.right) {
             val = limits.right - limits.left - handler.offsetWidth / 2;
           }
           let percent = ((val + handler.offsetWidth / 2) / container.offsetWidth) * 100;
@@ -661,10 +668,16 @@ export default {
       const iOS = !!userAgent.match(/iPad/i) || !!userAgent.match(/iPhone/i);
       if(iOS) res = true
       this.isSafari = res;
+    },
+    isAndroidCheck() {
+      if( (navigator.userAgent || navigator.vendor || window.opera).match( /Android/i ) ) {
+        this.isAndroid = true;
+      }
     }
   },
   mounted() {
     this.isSafariCheck();
+    this.isAndroidCheck();
     this.audio = new Audio();
 
     this.$root.$on("chooseSong", (obj) => {
@@ -755,19 +768,21 @@ export default {
       }
     });
 
-    document.addEventListener("mousemove", (e) => {
-      if (this.audio && this.audio.duration) {
-        if (this.lineDrag) {
-          let line = this.$refs.playerLine;
-          let lineCircle = this.$refs.playerLineCircle;
-          this.moveCircle(e, line, lineCircle, true);
+    ['mousemove', 'touchmove'].forEach(evt => {
+      document.addEventListener(evt, (e) => {
+        if (this.audio && this.audio.duration) {
+          if (this.lineDrag) {
+            let line = this.$refs.playerLine;
+            let lineCircle = this.$refs.playerLineCircle;
+            this.moveCircle(e, line, lineCircle, true);
+          }
+          if (this.volumeDrag) {
+            let volume = this.$refs.playerVolume;
+            let volumeCircle = this.$refs.playerVolumeCircle;
+            this.moveCircle(e, volume, volumeCircle, false);
+          }
         }
-        if (this.volumeDrag) {
-          let volume = this.$refs.playerVolume;
-          let volumeCircle = this.$refs.playerVolumeCircle;
-          this.moveCircle(e, volume, volumeCircle, false);
-        }
-      }
+      });
     });
 
     document.addEventListener("click", (e) => {
@@ -778,34 +793,36 @@ export default {
       }
     });
 
-    document.addEventListener("mouseup", () => {
-      if (this.audio && this.audio.duration) {
-        if (this.lineDrag) {
-          this.audio.currentTime = this.lineNewPosition;
-          this.current = this.convertMilliSeconds(this.lineNewPosition);
-          this.$refs.playerLineCircle.style.left = "unset";
-          this.lineDrag = false;
-        }
-        if (this.volumeDrag) {
-          if (this.volumeDir) {
-            this.$refs.playerVolumeCircle.style.bottom = "unset";
-            let height = window
-              .getComputedStyle(this.$refs.playerVolumeCircle)
-              .getPropertyValue("height");
-            height = height.replace("px", "") * 1;
-            this.$refs.playerVolumeCircle.style.top = -height / 2 + "px";
-            this.volumeDrag = false;
-          } else {
-            this.$refs.playerVolumeCircle.style.right = "unset";
-            let width = window
-              .getComputedStyle(this.$refs.playerVolumeCircle)
-              .getPropertyValue("width");
-            width = width.replace("px", "") * 1;
-            this.$refs.playerVolumeCircle.style.right = -width / 2 + "px";
-            this.volumeDrag = false;
+    ['mouseup', 'touchend'].forEach(evt => {
+      document.addEventListener(evt, () => {
+        if (this.audio && this.audio.duration) {
+          if (this.lineDrag) {
+            this.audio.currentTime = this.lineNewPosition;
+            this.current = this.convertMilliSeconds(this.lineNewPosition);
+            this.$refs.playerLineCircle.style.left = "unset";
+            this.lineDrag = false;
+          }
+          if (this.volumeDrag) {
+            if (this.volumeDir) {
+              this.$refs.playerVolumeCircle.style.bottom = "unset";
+              let height = window
+                .getComputedStyle(this.$refs.playerVolumeCircle)
+                .getPropertyValue("height");
+              height = height.replace("px", "") * 1;
+              this.$refs.playerVolumeCircle.style.top = -height / 2 + "px";
+              this.volumeDrag = false;
+            } else {
+              this.$refs.playerVolumeCircle.style.right = "unset";
+              let width = window
+                .getComputedStyle(this.$refs.playerVolumeCircle)
+                .getPropertyValue("width");
+              width = width.replace("px", "") * 1;
+              this.$refs.playerVolumeCircle.style.right = -width / 2 + "px";
+              this.volumeDrag = false;
+            }
           }
         }
-      }
+      });
     });
 
     document.addEventListener("keydown", (e) => {
