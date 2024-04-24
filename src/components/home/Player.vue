@@ -660,7 +660,7 @@ export default {
       const userAgent = window.navigator.userAgent;
       const iOS = !!userAgent.match(/iPad/i) || !!userAgent.match(/iPhone/i);
       if(iOS) res = true
-      this.isSafari = true;
+      this.isSafari = res;
     }
   },
   mounted() {
