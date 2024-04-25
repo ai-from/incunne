@@ -864,6 +864,7 @@ export default {
       // queue - Z: 90
       // download - X: 88
       // copy link - W: 87
+      // text - T: 84
       if (this.audio && this.audio.duration && this.isPlayerActive) {
         e.preventDefault();
 
@@ -895,12 +896,13 @@ export default {
         // song prev/next | Ctrl + arrowLeft / Ctrl + arrowRight
         else if (e.ctrlKey && e.keyCode === 37) this.prevClick();
         else if (e.ctrlKey && e.keyCode === 39) this.nextClick();
-        // repeat/mix/queue/download/copy | A / S / Z / X / W
+        // repeat/mix/queue/download/copy/text | A / S / Z / X / W / T
         else if (e.keyCode === 65) this.repeatClick();
         else if (e.keyCode === 83) this.mixClick();
         else if (e.keyCode === 90) this.queueClick();
         else if (e.keyCode === 88) this.downloadClick();
         else if (e.keyCode === 87) this.copyLink();
+        else if (e.keyCode === 84) this.textClick();
       }
     });
 
