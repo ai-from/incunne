@@ -49,7 +49,7 @@ export default {
     })
   },
   methods: {
-    showCurrentText(albumIndex, songIndex) {
+    async showCurrentText(albumIndex, songIndex) {
       if(this.albums[albumIndex].songs.length) {
         this.songName = this.albums[albumIndex].songs[songIndex].title
         let album = this.albums[albumIndex].innerTitle
@@ -59,6 +59,9 @@ export default {
         axios
           .get(src, {responseType: 'text'})
           .then(res => this.songContent = res.data)
+          .then(res => {
+            if(this.$route.params.chooseText) this.scrollText()
+          })
           .catch(err => console.log(err))
       }
     },
@@ -89,14 +92,12 @@ export default {
   mounted() {
     this.$root.$on('chooseText', obj => {
       this.showCurrentText(obj.albumIndex, obj.songIndex)
-      this.scrollText()
     })
     if(this.$route.params.chooseText) {
       let obj = this.$route.params.chooseText;
       this.showCurrentText(obj.albumIndex, obj.songIndex)
-      this.scrollText()
     }
-  }
+  },
 }
 </script>
 
