@@ -68,12 +68,12 @@ export default {
       'TEXT_LEAVE',
       'TEXT_ACTIVE'
     ]),
-    textClick(albumIndex, songIndex) {
+    textClick(albumIndex, songIndex, isFromTextLeft = true) {
       this.albums.forEach((album, index) => {
         album.songs.forEach((song, index2) => this.TEXT_ACTIVE([index, index2, false]))
       })
       this.TEXT_ACTIVE([albumIndex, songIndex, true])
-      this.$root.$emit('chooseText', {albumIndex, songIndex})
+      if(isFromTextLeft) this.$root.$emit('chooseText', {albumIndex, songIndex})
     },
     up() {
       document.querySelector('.scroll-up').scrollTo({top: 0, left: 0, behavior: 'smooth'})
@@ -92,6 +92,15 @@ export default {
       if(this.albums[0].songs.length) this.TEXT_ACTIVE([0, 0, true])
       else this.TEXT_ACTIVE([1, 0, true])
     }
+  },
+  mounted() {
+    if(this.$route.params.chooseText) {
+      let obj = this.$route.params.chooseText;
+      this.textClick(obj.albumIndex, obj.songIndex, false);
+    }
+    this.$root.$on('textClcik', obj => {
+      this.textClick(obj.albumIndex, obj.songIndex, obj.isFromTextLeft)
+    })
   }
 }
 </script>

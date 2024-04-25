@@ -172,6 +172,11 @@ export default {
     this.$root.$on('closeMobileMenu', () => {
       if(this.mobileMenu) this.checkNavLinks(true)
     })
+  },
+  watch: {
+    $route(oldVal, newVal) {
+      this.checkNavLinks();
+    }
   }
 }
 </script>

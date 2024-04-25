@@ -152,6 +152,7 @@ export default {
 <style lang="sass" scoped>
 .svg-icon
     display: flex
+    width: min-content
     &.relative
         position: relative
     &.absolute

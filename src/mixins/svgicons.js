@@ -310,4 +310,34 @@ export const icons = {
       ],
     },
   },
+  text: {
+    width: 19,
+    height: 23,
+    fill: "none",
+    viewBox: "0 0 19 23",
+    content: {
+      path: [
+        {
+          d: "M1 6H5V1.5",
+          ["stroke-width"]: "1.5",
+        },
+        {
+          d: "M17.2679 1H5.1215L1 5.86293V22H17.2679V1Z",
+          ["stroke-width"]: "1.5",
+        },
+        {
+          d: "M4 9.5H14.947",
+          ["stroke-width"]: "1",
+        },
+        {
+          d: "M4 13.5H14.947",
+          ["stroke-width"]: "1",
+        },
+        {
+          d: "M4 17.5H14.947",
+          ["stroke-width"]: "1",
+        },
+      ],
+    },
+  },
 };

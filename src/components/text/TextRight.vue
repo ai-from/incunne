@@ -91,6 +91,11 @@ export default {
       this.showCurrentText(obj.albumIndex, obj.songIndex)
       this.scrollText()
     })
+    if(this.$route.params.chooseText) {
+      let obj = this.$route.params.chooseText;
+      this.showCurrentText(obj.albumIndex, obj.songIndex)
+      this.scrollText()
+    }
   }
 }
 </script>

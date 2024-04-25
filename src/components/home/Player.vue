@@ -201,6 +201,16 @@
               :tooltipLocation="tooltipLocation.copied"
             /> 
           </div>
+
+          <SVGIcon
+            class="player__text"
+            :classes="[{default: !songTitle}]"
+            iconName="text"
+            :tooltipText="lang === 'en' ? 'Text: T' : 'Текст: T'"
+            :tooltipLocation="tooltipLocation.text"
+            :color="`rgb(${theme})`"
+            @click="textClick"
+          />
         </div>
 
         <div
@@ -304,7 +314,8 @@ export default {
         download: 'left',
         share: 'left',
         copied: 'left',
-        volume: 'left'
+        volume: 'left',
+        text: 'left'
       }
     };
   },
@@ -470,6 +481,20 @@ export default {
           .catch((err) => {
             alert("Что-то пошло не так");
           });
+      } else this.needSong();
+    },
+    textClick() {
+      if (this.audio && this.audio.duration) {
+        if(this.$route.path !== '/text') {
+          this.$router.push({
+            name: 'TextBoth',
+            params: {
+              chooseText: {albumIndex: this.albumIndex, songIndex: this.songIndex}
+            }});
+        } else {
+          this.$root.$emit('textClcik', {albumIndex: this.albumIndex, songIndex: this.songIndex, isFromTextLeft: false});
+          this.$root.$emit('chooseText', {albumIndex: this.albumIndex, songIndex: this.songIndex});
+        }
       } else this.needSong();
     },
     volumeClick($event) {
@@ -644,6 +669,7 @@ export default {
         this.tooltipLocation.download = 'bottom';
         this.tooltipLocation.share = 'bottom';
         this.tooltipLocation.copied = 'bottom';
+        this.tooltipLocation.text = 'bottom';
         this.tooltipLocation.volume = 'bottom';
       } else {
         this.tooltipLocation.prevSong = 'right';
@@ -658,6 +684,7 @@ export default {
         this.tooltipLocation.download = 'left';
         this.tooltipLocation.share = 'left';
         this.tooltipLocation.copied = 'left';
+        this.tooltipLocation.text = 'left';
         this.tooltipLocation.volume = 'left';
       }
     },
@@ -996,7 +1023,7 @@ export default {
   &__right-buttons
     display: grid
     grid-template-columns: repeat(2, min-content)
-    grid-template-rows: repeat(2, min-content)
+    grid-template-rows: repeat(3, min-content)
     grid-gap: 20px
     align-items: end
   &__repeat
@@ -1022,7 +1049,6 @@ export default {
     transform: translate(-50%, -50%) scale(1)
     cursor: pointer
     opacity: 1
-    // transition: all linear .25s
     &_hide
       opacity: 0
       transform: translate(-50%, -50%) scale(0)
@@ -1035,7 +1061,10 @@ export default {
     &_show
       opacity: 1
       transform: translate(-50%, -50%) scale(1)
-      // transition: all linear .25s
+  &__text
+    cursor: pointer
+    position: relative
+    top: 1px
   &__volume-wrapper
     display: grid
     grid-template-rows: repeat(2, min-content)
@@ -1124,7 +1153,7 @@ export default {
     &__right-buttons
       grid-column: 1/2
       grid-row: 2/3
-      grid-template-columns: repeat(5, min-content)
+      grid-template-columns: repeat(6, min-content)
       grid-template-rows: min-content
       justify-content: center
 </style>
