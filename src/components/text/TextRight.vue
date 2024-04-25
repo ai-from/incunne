@@ -49,7 +49,7 @@ export default {
     })
   },
   methods: {
-    async showCurrentText(albumIndex, songIndex) {
+    async showCurrentText(albumIndex, songIndex, isScroll = true) {
       if(this.albums[albumIndex].songs.length) {
         this.songName = this.albums[albumIndex].songs[songIndex].title
         let album = this.albums[albumIndex].innerTitle
@@ -60,7 +60,7 @@ export default {
           .get(src, {responseType: 'text'})
           .then(res => this.songContent = res.data)
           .then(res => {
-            if(this.$route.params.chooseText) this.scrollText()
+            if(isScroll) this.scrollText()
           })
           .catch(err => console.log(err))
       }
@@ -78,7 +78,7 @@ export default {
       if(album.songs.length) {
         album.songs.forEach((song, index2) => {
           if(song.textActive) {
-            this.showCurrentText(index, index2)
+            this.showCurrentText(index, index2, false)
             count++
           }
         })
