@@ -5,6 +5,12 @@ export default {
     isBg: false,
     isPlayerActive: false,
     lang: "ru",
+    currentSong: {
+      songTitle: "",
+      albumIndex: null,
+      songIndex: null,
+      isPlaying: false,
+    },
   },
   mutations: {
     SET_THEME(state, load) {
@@ -18,6 +24,12 @@ export default {
     },
     SET_LANG(state, load) {
       state.lang = load;
+    },
+    SET_CURRENT_SONG(state, load) {
+      state.currentSong.songTitle = load.songTitle;
+      state.currentSong.albumIndex = load.albumIndex;
+      state.currentSong.songIndex = load.songIndex;
+      state.currentSong.isPlaying = load.isPlaying;
     },
   },
   actions: {
@@ -33,6 +45,9 @@ export default {
     SET_LANG({ commit }, load) {
       commit("SET_LANG", load);
     },
+    SET_CURRENT_SONG({ commit }, load) {
+      commit("SET_CURRENT_SONG", load);
+    },
   },
   getters: {
     GET_THEME(state) {
@@ -46,6 +61,9 @@ export default {
     },
     GET_LANG(state) {
       return state.lang;
+    },
+    GET_CURRENT_SONG(state) {
+      return state.currentSong;
     },
   },
 };

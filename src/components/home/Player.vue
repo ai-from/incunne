@@ -323,7 +323,8 @@ export default {
     ...mapState("common", {
       theme: (state) => state.theme,
       isPlayerActive: (state) => state.isPlayerActive,
-      lang: state => state.lang
+      lang: state => state.lang,
+      currentSong: state => state.currentSong
     }),
     ...mapState("albums", {
       albums: (state) => state.albums,
@@ -331,7 +332,7 @@ export default {
   },
   mixins: [setDownloadParams],
   methods: {
-    ...mapMutations("common", ["SET_IS_PLAYER_ACTIVE"]),
+    ...mapMutations("common", ["SET_IS_PLAYER_ACTIVE", "SET_CURRENT_SONG"]),
     playerClick() {
       this.SET_IS_PLAYER_ACTIVE(true);
     },
@@ -352,12 +353,26 @@ export default {
       if (this.audio.duration) {
         this.isPaused = false;
         this.audio.play();
+        this.SET_CURRENT_SONG({
+          songTitle: this.songTitle,
+          albumIndex: this.albumIndex,
+          songIndex: this.songIndex,
+          isPlaying: true,
+        })
+        this.$root.$emit('updateSong')
       } else this.needSong();
     },
     pauseClick() {
       if (this.audio.duration) {
         this.isPaused = true;
         this.audio.pause();
+        this.SET_CURRENT_SONG({
+          songTitle: this.songTitle,
+          albumIndex: this.albumIndex,
+          songIndex: this.songIndex,
+          isPlaying: false,
+        })
+        this.$root.$emit('updateSong')
       } else this.needSong();
     },
     prevClick() {
@@ -378,6 +393,13 @@ export default {
           this.albumIndex,
           this.songIndex
         ).downloadName;
+        this.SET_CURRENT_SONG({
+          songTitle: this.songTitle,
+          albumIndex: this.albumIndex,
+          songIndex: this.songIndex,
+          isPlaying: true,
+        })
+        this.$root.$emit('updateSong')
       } else this.needSong();
     },
     nextClick() {
@@ -398,6 +420,13 @@ export default {
           this.albumIndex,
           this.songIndex
         ).downloadName;
+        this.SET_CURRENT_SONG({
+          songTitle: this.songTitle,
+          albumIndex: this.albumIndex,
+          songIndex: this.songIndex,
+          isPlaying: true,
+        })
+        this.$root.$emit('updateSong')
       } else this.needSong();
     },
     lineClick($event) {
@@ -703,9 +732,27 @@ export default {
     }
   },
   mounted() {
+    this.$root.$on('playByText', songName => {
+      if(this.songTitle === songName) this.playClick();
+      else {
+        this.albums.forEach((album, albumIndex) => {
+          album.songs.forEach((song, songIndex) => {
+            if(song.title === songName) {
+              this.$root.$emit('chooseSong', {albumIndex, songIndex});
+            }
+          })
+        })
+      }
+    })
+
+    this.$root.$on('pauseByText', songName => {
+      if(this.songTitle === songName) this.pauseClick();
+    })
+
     this.isSafariCheck();
     this.isAndroidCheck();
     this.audio = new Audio();
+
 
     this.$root.$on("chooseSong", (obj) => {
       this.albumIndex = obj.albumIndex;
@@ -737,6 +784,12 @@ export default {
           this.songIndex
         ).downloadName;
       }
+      this.SET_CURRENT_SONG({
+        songTitle: this.songTitle,
+        albumIndex: this.albumIndex,
+        songIndex: this.songIndex,
+        isPlaying: true,
+      })
     });
 
     this.audio.addEventListener("loadedmetadata", () => {

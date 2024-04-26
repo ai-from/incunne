@@ -7,6 +7,26 @@
       :style="{color: `rgb(${theme})`}"
     >
       {{ songName }}
+      <div class="player__control">
+        <SVGIcon
+          v-if="!isPlaying"
+          class="song-play"
+          iconName="playByText"
+          :tooltipText="this.lang === 'en' ? 'Play' : 'Воспроизвести'"
+          tooltipLocation="left"
+          :color="`rgb(${theme})`"
+          @click="playByText"
+        />
+        <SVGIcon
+          v-else
+          class="song-pause"
+          iconName="pauseByText"
+          :tooltipText="this.lang === 'en' ? 'Pause' : 'Пауза'"
+          tooltipLocation="left"
+          :color="`rgb(${theme})`"
+          @click="pauseByText"
+        />
+      </div>
     </div>
     <div class="song-content" v-html="songContent"></div>
     <br>
@@ -37,12 +57,15 @@ import axios from 'axios'
 export default {
   data: () => ({
     songName: '',
-    songContent: ''
+    songContent: '',
+    isPlaying: false,
+    playingSong: ''
   }),
   computed: {
     ...mapState('common', {
       theme: state => state.theme,
-      lang: state => state.lang
+      lang: state => state.lang,
+      currentSong: state => state.currentSong,
     }),
     ...mapState('albums', {
       albums: state => state.albums
@@ -70,6 +93,20 @@ export default {
     },
     scrollText() {
       document.querySelector('.texts__right').scrollIntoView({behavior: 'smooth', block: 'start'});
+    },
+    checkTextStatus() {
+      if(this.currentSong.songTitle === this.songName) {
+        if(this.currentSong.isPlaying) this.isPlaying = true;
+        else this.isPlaying = false;
+      } else this.isPlaying = false;
+    },
+    playByText() {
+      this.$root.$emit('playByText', this.songName);
+      this.checkTextStatus();
+    },
+    pauseByText() {
+      this.$root.$emit('pauseByText', this.songName);
+      this.checkTextStatus();
     }
   },
   created() {
@@ -90,14 +127,27 @@ export default {
     }
   },
   mounted() {
+    this.checkTextStatus();
+
     this.$root.$on('chooseText', obj => {
       this.showCurrentText(obj.albumIndex, obj.songIndex)
     })
+
     if(this.$route.params.chooseText) {
       let obj = this.$route.params.chooseText;
       this.showCurrentText(obj.albumIndex, obj.songIndex)
     }
+
+    this.$root.$on('updateSong', () => {
+      this.checkTextStatus();
+    })
+
   },
+  watch: {
+    songName(oldVal, newVal) {
+      this.checkTextStatus();
+    }
+  }
 }
 </script>
 
@@ -110,6 +160,17 @@ export default {
       padding: 8px
       margin-bottom: 10px
       background: rgba($black, .5)
+      display: grid
+      grid-template-columns: repeat(2, min-content)
+      align-items: center
+      justify-content: space-between
+      white-space: nowrap
+    .player__control
+      width: 14px
+      display: grid
+      justify-content: center
+      .svg-icon
+        cursor: pointer
     .song-content
       padding: 0 8px
     .song-footer
