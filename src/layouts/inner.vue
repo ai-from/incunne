@@ -20,7 +20,7 @@ import setBg from "../mixins/setBg"
 import colorScrollbar from "../mixins/colorScrollbar"
 import Header from "../components/common/Header"
 import Logo from "../components/common/Logo"
-import BreadCrumbs from '../components/BreadCrumbs.vue'
+import BreadCrumbs from '../components/common/BreadCrumbs.vue'
 import MenuIcons from '../components/common/MenuIcons.vue'
 import Player from "../components/home/Player"
 import Footer from "../components/common/Footer"
