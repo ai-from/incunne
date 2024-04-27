@@ -205,7 +205,7 @@
           <SVGIcon
             class="player__text"
             :classes="[{default: !songTitle}]"
-            iconName="text"
+            iconName="oldText"
             :tooltipText="lang === 'en' ? 'Text: T' : 'Текст: T'"
             :tooltipLocation="tooltipLocation.text"
             :color="`rgb(${theme})`"

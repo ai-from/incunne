@@ -5,6 +5,7 @@
         <Header @mobileClick="mobileClick" />
         <Logo :mini="isMiniLogo" />
         <BreadCrumbs :class="{hidden: !isVisibleBlock}" />
+        <MenuIcons :class="{hidden: !isVisibleBlock}" />
         <Player :class="{hidden: !isVisibleBlock}" />
         <router-view :class="{hidden: !isVisibleBlock}" />
         <Footer :class="{hidden: !isVisibleBlock}" />
@@ -20,6 +21,7 @@ import colorScrollbar from "../mixins/colorScrollbar"
 import Header from "../components/common/Header"
 import Logo from "../components/common/Logo"
 import BreadCrumbs from '../components/BreadCrumbs.vue'
+import MenuIcons from '../components/common/MenuIcons.vue'
 import Player from "../components/home/Player"
 import Footer from "../components/common/Footer"
 export default {
@@ -34,6 +36,7 @@ export default {
     Header,
     Logo,
     BreadCrumbs,
+    MenuIcons,
     Player,
     Footer
   },

@@ -1,14 +1,15 @@
 <template>
     <div :class="['svg-icon', `${cssPosition}`]">
         <svg
-            :width="width"
-            :height="height"
+            :width="originalWidth"
+            :height="originalHeight"
             :viewBox="viewBox"
             :fill="fill"
             xmlns="http://www.w3.org/2000/svg"
             :class="[...classes]"
             @click="$emit('click')"
             ref="SVGIcon"
+            :style="{width, height}"
         >
             <template v-if="content.path">
                 <path
@@ -16,6 +17,8 @@
                     :key="`path-${index}`"
                     :d="item.d"
                     :stroke-width="item['stroke-width']"
+                    :fill-rule="item['fill-rule']"
+                    :clip-rule="item['clip-rule']"
                 ></path>
             </template>
             <template v-if="content.line">
@@ -89,13 +92,23 @@ export default {
             type: String,
             required: false,
             default: 'relative'
+        },
+        width: {
+            type: String,
+            required: false,
+            default: null
+        },
+        height: {
+            type: String,
+            required: false,
+            default: null
         }
     },
     computed: {
-        width() {
+        originalWidth() {
             return icons[this.iconName].width;
         },
-        height() {
+        originalHeight() {
             return icons[this.iconName].height;
         },
         fill() {
