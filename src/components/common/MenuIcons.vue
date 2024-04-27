@@ -27,7 +27,7 @@ export default {
             {icon: 'photo', tooltip: {ru: 'Фото', en: 'Photo'}, to: '/photo', isActive: false, tooltipLocation: 'bottom'},
             {icon: 'video', tooltip: {ru: 'Видео', en: 'Video'}, to: '/video', isActive: false, tooltipLocation: 'bottom'},
             {icon: 'mail', tooltip: {ru: 'Обратная связь', en: 'Feedback'}, to: '/feedback', isActive: false, tooltipLocation: 'bottom'},
-            {icon: 'ava', tooltip: {ru: 'Обо мне', en: 'About'}, to: '/about', isActive: false, tooltipLocation: 'bottom'}
+            {icon: 'avatarSimple', tooltip: {ru: 'Обо мне', en: 'About'}, to: '/about', isActive: false, tooltipLocation: 'bottom'}
         ],
         width: "auto",
         height: "20",
