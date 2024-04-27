@@ -10,7 +10,7 @@
         :tooltipText="lang === 'en' ? svgIcon.tooltip.en : svgIcon.tooltip.ru"
         tooltipLocation="bottom"
         :color="svgIcon.isActive ? `rgba(${theme}, 1)` : color"
-        @click="$router.push(svgIcon.to)"
+        @click="clickMenu(svgIcon)"
     />
   </div>
 </template>
@@ -47,6 +47,11 @@ export default {
             if(item.to === this.$route.path) item.isActive = true
             else item.isActive = false
         });
+    },
+    clickMenu(item) {
+        if(item.to !== this.$route.path) {
+            this.$router.push(item.to)
+        }
     }
   },
   mounted() {

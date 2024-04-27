@@ -203,9 +203,11 @@
           </div>
 
           <SVGIcon
+            width="auto"
+            height="23"
             class="player__text"
             :classes="[{default: !songTitle}]"
-            iconName="oldText"
+            iconName="text"
             :tooltipText="lang === 'en' ? 'Text: T' : 'Текст: T'"
             :tooltipLocation="tooltipLocation.text"
             :color="`rgb(${theme})`"
@@ -1118,8 +1120,8 @@ export default {
       transform: translate(-50%, -50%) scale(1)
   &__text
     cursor: pointer
-    position: relative
-    top: 1px
+    // position: relative
+    // top: 1px
   &__volume-wrapper
     display: grid
     grid-template-rows: repeat(2, min-content)
