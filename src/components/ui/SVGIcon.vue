@@ -249,4 +249,57 @@ export default {
                 left: 50%
                 transform: translateX(-50%)
                 top: -4px
+        &__bottomLeft
+            top: calc(100% + 6px)
+            left: 0
+            &::before
+                content: ''
+                width: 0
+                height: 0
+                border-left: 4px solid transparent
+                border-right: 4px solid transparent
+                border-bottom: 4px solid rgb(46, 46, 46)
+                position: absolute
+                left: 4px
+                top: -4px
+        &__bottomRight
+            top: calc(100% + 6px)
+            right: 0
+            &::before
+                content: ''
+                width: 0
+                height: 0
+                border-left: 4px solid transparent
+                border-right: 4px solid transparent
+                border-bottom: 4px solid rgb(46, 46, 46)
+                position: absolute
+                right: 4px
+                top: -4px
+        &__topLeft
+            top: calc(-100% - 8px)
+            left: 0
+            &::before
+                content: ''
+                width: 0
+                height: 0
+                border-left: 4px solid transparent
+                border-right: 4px solid transparent
+                border-top: 4px solid rgb(46, 46, 46)
+                position: absolute
+                left: 4px
+                bottom: -4px
+        &__topRight
+            top: calc(-100% - 8px)
+            right: 0
+            &::before
+                content: ''
+                width: 0
+                height: 0
+                border-left: 4px solid transparent
+                border-right: 4px solid transparent
+                border-top: 4px solid rgb(46, 46, 46)
+                position: absolute
+                right: 4px
+                bottom: -4px
+
 </style>

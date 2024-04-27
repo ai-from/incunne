@@ -8,7 +8,7 @@
         class="menu-icon"
         :iconName="svgIcon.icon"
         :tooltipText="lang === 'en' ? svgIcon.tooltip.en : svgIcon.tooltip.ru"
-        tooltipLocation="bottom"
+        :tooltipLocation="svgIcon.tooltipLocation"
         :color="svgIcon.isActive ? `rgba(${theme}, 1)` : color"
         @click="clickMenu(svgIcon)"
     />
@@ -22,12 +22,12 @@ export default {
   data() {
     return {
         menuIcons: [
-            {icon: 'music', tooltip: {ru: 'Музыка', en: 'Music'}, to: '/', isActive: false},
-            {icon: 'text', tooltip: {ru: 'Текст', en: 'Text'}, to: '/text', isActive: false},
-            {icon: 'photo', tooltip: {ru: 'Фото', en: 'Photo'}, to: '/photo', isActive: false},
-            {icon: 'video', tooltip: {ru: 'Видео', en: 'Video'}, to: '/video', isActive: false},
-            {icon: 'mail', tooltip: {ru: 'Обратная связь', en: 'Feedback'}, to: '/feedback', isActive: false},
-            {icon: 'ava', tooltip: {ru: 'Обо мне', en: 'About'}, to: '/about', isActive: false}
+            {icon: 'music', tooltip: {ru: 'Музыка', en: 'Music'}, to: '/', isActive: false, tooltipLocation: 'bottomLeft'},
+            {icon: 'text', tooltip: {ru: 'Текст', en: 'Text'}, to: '/text', isActive: false, tooltipLocation: 'bottom'},
+            {icon: 'photo', tooltip: {ru: 'Фото', en: 'Photo'}, to: '/photo', isActive: false, tooltipLocation: 'bottom'},
+            {icon: 'video', tooltip: {ru: 'Видео', en: 'Video'}, to: '/video', isActive: false, tooltipLocation: 'bottom'},
+            {icon: 'mail', tooltip: {ru: 'Обратная связь', en: 'Feedback'}, to: '/feedback', isActive: false, tooltipLocation: 'bottom'},
+            {icon: 'ava', tooltip: {ru: 'Обо мне', en: 'About'}, to: '/about', isActive: false, tooltipLocation: 'bottom'}
         ],
         width: "auto",
         height: "20",
