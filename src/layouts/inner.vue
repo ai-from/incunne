@@ -6,7 +6,7 @@
         <Logo :mini="isMiniLogo" />
         <BreadCrumbs :class="{hidden: !isVisibleBlock}" />
         <MenuIcons :class="{hidden: !isVisibleBlock}" />
-        <Player :class="{hidden: !isVisibleBlock}" />
+        <Player :class="{hidden: !isVisibleBlock || !isHomePage}" />
         <router-view :class="{hidden: !isVisibleBlock}" />
         <Footer :class="{hidden: !isVisibleBlock}" />
       </div>
@@ -29,7 +29,8 @@ export default {
   data() {
     return {
       isVisibleBlock: true,
-      isMiniLogo: false
+      isMiniLogo: false,
+      isHomePage: false,
     }
   },
   components: {
@@ -64,6 +65,10 @@ export default {
       let w = window.getComputedStyle(document.body).getPropertyValue('width')
       w = w.replace('px', '') * 1
       this.isMiniLogo = w <= 900
+    },
+    isPlayerShow() {
+      const homePage = document.querySelector('.home-page')
+      this.isHomePage = !!homePage
     }
   },
   mounted() {
@@ -82,7 +87,14 @@ export default {
 
     this.setLogoSize()
     window.addEventListener('resize', () => this.setLogoSize())
-  }
+
+    this.isPlayerShow()
+  },
+  updated() {
+    this.$nextTick(() => {
+      this.isPlayerShow()
+    })
+  },
 }
 </script>
 
