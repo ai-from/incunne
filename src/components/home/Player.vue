@@ -16,6 +16,14 @@
         :color="isPlayerActive && this.audio && this.audio.duration ? `rgb(${theme})` : `rgba(219, 219, 219, .7)`"
       />
 
+      <img
+        class="player__album-cover"
+        :src="require(`./../../assets/img/home/album_${this.albums[this.albumIndex].innerTitle}.svg`)"
+        alt=""
+        title=""
+        :style="{border: `1px solid rgba(${theme}, .1)`}"
+      />
+
       <div class="player__left">
         <SVGIcon
           class="player__prev"
@@ -993,12 +1001,15 @@ export default {
     padding: 30px
     background: rgba($black, .5)
     display: grid
-    grid-template-columns: repeat(3, min-content)
-    grid-column-gap: 30px
+    grid-template-columns: repeat(4, min-content)
+    grid-column-gap: 25px
     align-items: center
     position: relative
     &.changed
       border-color: rgba($grey, .3) !important
+  &__album-cover
+    width: 100px
+    height: auto
   &__left
     height: 36px
     display: grid
@@ -1030,7 +1041,7 @@ export default {
     &.changed
       color: rgba($grey, .3) !important
   &__line
-    width: 427px
+    width: 327px
     height: 4px
     background: rgba($grey, .7)
     position: relative
@@ -1156,7 +1167,7 @@ export default {
 
 ::v-deep .svg-icon.player__indicator
   left: 30px
-  top: 15px
+  top: 10px
   @media screen and (max-width: 900px)
     top: 20px
     left: 20px
@@ -1167,24 +1178,30 @@ export default {
       width: 100%
       max-width: 400px
       grid-template-columns: 1fr
-      grid-template-rows: repeat(3, min-content)
+      grid-template-rows: repeat(4, min-content)
       padding: 60px 20px 30px
       grid-row-gap: 30px
     &__indicator
       // top: 20px
       // left: 20px
-    &__center
+    &__album-cover
       grid-column: 1/2
       grid-row: 1/2
+      margin: 0 auto
+      width: 150px
+      height: auto
+    &__center
+      grid-column: 1/2
+      grid-row: 2/3
     &__line
       width: 100%
     &__left
       grid-column: 1/2
-      grid-row: 2/3
+      grid-row: 3/4
       justify-content: center
     &__right
       grid-column: 1/2
-      grid-row: 3/4
+      grid-row: 4/5
       display: grid
       grid-template-columns: 1fr
       grid-template-rows: repeat(2, min-content)
