@@ -7,8 +7,6 @@
         :height="height"
         class="menu-icon"
         :iconName="svgIcon.icon"
-        :tooltipText="lang === 'en' ? svgIcon.tooltip.en : svgIcon.tooltip.ru"
-        :tooltipLocation="svgIcon.tooltipLocation"
         :color="svgIcon.isActive ? `rgba(${theme}, 1)` : color"
         @click="clickMenu(svgIcon)"
     />
