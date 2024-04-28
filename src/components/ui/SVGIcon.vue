@@ -220,7 +220,7 @@ export default {
                 transform: translateY(-50%)
                 left: -4px
         &__top
-            top: calc(-100% - 18px)
+            top: calc(-100% - 8px)
             left: 50%
             transform: translateX(-50%)
             &::before

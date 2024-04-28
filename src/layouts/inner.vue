@@ -6,8 +6,10 @@
         <Logo :mini="isMiniLogo" />
         <BreadCrumbs :class="{hidden: !isVisibleBlock}" />
         <MenuIcons :class="{hidden: !isVisibleBlock}" />
-        <Player :class="{hidden: !isVisibleBlock || !isHomePage}" />
-        <router-view :class="{hidden: !isVisibleBlock}" />
+        <div>
+          <Player :class="{hidden: !isVisibleBlock || !isHomePage}" />
+          <router-view :class="{hidden: !isVisibleBlock}" />
+        </div>
         <Footer :class="{hidden: !isVisibleBlock}" />
       </div>
     </div>
@@ -109,7 +111,7 @@ export default {
     min-height: 100vh
   &__wrapper
     display: grid !important
-    grid-template-rows: repeat(3, min-content) 1fr min-content
+    grid-template-rows: repeat(4, min-content) 1fr min-content
     min-height: inherit
     margin: 0 auto
     .logo
