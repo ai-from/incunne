@@ -1188,7 +1188,7 @@ export default {
       grid-column: 1/2
       grid-row: 1/2
       margin: 0 auto
-      width: 150px
+      width: 190px
       height: auto
     &__center
       grid-column: 1/2
