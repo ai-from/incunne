@@ -371,10 +371,12 @@ export default {
 
   &__songs-wrap
     padding: 10px 0 20px
+    .vb
+      height: 100%
 
   &__songs
     white-space: nowrap
-    height: 336px !important
+    // height: 336px !important
     width: unset !important
     margin-right: -60px !important
     padding-right: 60px !important
