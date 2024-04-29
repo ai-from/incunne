@@ -142,19 +142,19 @@ export default {
     },
     mounted() {
         this.colorSVGContent();
-        if(this.tooltipText && this.$refs.SVGIcon) {
-            this.$refs.SVGIcon.addEventListener('mouseenter', () => {
-                if(!this.$refs.SVGIcon.classList.contains('disabled')) {
-                    this.$refs.SVGIconTooltip.style.display = 'block';
-                    setTimeout(() => {
-                        this.$refs.SVGIconTooltip.style.display = 'none';
-                    }, 2000);
-                }   
-            });
-            this.$refs.SVGIcon.addEventListener('mouseleave', () => {
-                this.$refs.SVGIconTooltip.style.display = 'none';
-            });
-        }   
+        // if(this.tooltipText && this.$refs.SVGIcon) {
+        //     this.$refs.SVGIcon.addEventListener('mouseenter', () => {
+        //         if(!this.$refs.SVGIcon.classList.contains('disabled')) {
+        //             this.$refs.SVGIconTooltip.style.display = 'block';
+        //             setTimeout(() => {
+        //                 this.$refs.SVGIconTooltip.style.display = 'none';
+        //             }, 2000);
+        //         }   
+        //     });
+        //     this.$refs.SVGIcon.addEventListener('mouseleave', () => {
+        //         this.$refs.SVGIconTooltip.style.display = 'none';
+        //     });
+        // }   
     },
     updated() {
         this.colorSVGContent();
