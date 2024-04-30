@@ -81,7 +81,7 @@
             height="16"
             class="header__info"
             iconName="info2"
-            :color="isTooltip === 'on' ? `rgba(${theme}, .7)` : 'rgba(219,219,219, .7)'"
+            :color="isTooltip === 'on' ? `rgba(${theme}, .7)` : 'rgba(219,219,219, .5)'"
             @click="changeTooltipStatus"
           />
       </div>
