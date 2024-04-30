@@ -68,13 +68,22 @@
              @click="setTheme(index)"
         ></div>
       </div>
-      <div class="header__language">
+      <div class="header__settings">
         <span
+          class="header__language"
           @click="changeLanguage"
           :style="{color: `rgb(${theme})`}"
         >
           {{ lang.toUpperCase() }}
         </span>
+        <SVGIcon
+            width="auto"
+            height="16"
+            class="header__info"
+            iconName="info2"
+            :color="isTooltip === 'on' ? `rgba(${theme}, .7)` : 'rgba(219,219,219, .7)'"
+            @click="changeTooltipStatus"
+          />
       </div>
     </div>
 
@@ -109,13 +118,15 @@ export default {
   computed: {
     ...mapState('common', {
       theme: state => state.theme,
-      lang: state => state.lang
+      lang: state => state.lang,
+      isTooltip: state => state.isTooltip
     })
   },
   methods: {
     ...mapMutations('common', [
       'SET_THEME',
-      'SET_LANG'
+      'SET_LANG',
+      'SET_TOOLTIP'
     ]),
     checkNavLinks(isMobile, index) {
       let link = document.querySelector('.router-link-exact-active') || false
@@ -144,6 +155,11 @@ export default {
     changeLanguage() {
       this.lang === 'en' ? this.SET_LANG('ru') : this.SET_LANG('en');
       localStorage.setItem('lang', this.lang)
+    },
+    changeTooltipStatus() {
+      const newTooltipStatus = this.isTooltip === 'on' ? 'off' : 'on';
+      this.SET_TOOLTIP(newTooltipStatus)
+      localStorage.setItem('isTooltip', newTooltipStatus)
     }
   },
   mounted() {
@@ -155,11 +171,19 @@ export default {
     } else {
       localStorage.setItem('color', this.theme)
     }
+
     if(localStorage.getItem('lang')) {
       let lang = localStorage.getItem('lang')
       this.SET_LANG(lang)
     } else {
       localStorage.setItem('lang', this.lang)
+    }
+
+    if(localStorage.getItem('isTooltip')) {
+      let isTooltip = localStorage.getItem('isTooltip')
+      this.SET_TOOLTIP(isTooltip)
+    } else {
+      localStorage.setItem('isTooltip', this.isTooltip)
     }
 
     this.checkNavLinks()
@@ -254,11 +278,16 @@ export default {
     width: 10px
     height: 10px
     cursor: pointer
-  &__language
+  &__settings
     display: grid
+    grid-template-columns: repeat(2, min-content)
+    align-items: center
+    grid-gap: 5px
     justify-items: end
+    justify-content: end
     font-size: 15px
     cursor: pointer
+  &__info
 
   .mobileMenu-enter, .mobileMenu-leave-to
     opacity: 0
@@ -289,6 +318,13 @@ export default {
         justify-content: left
       .header__colors
         justify-content: left
-      .header__language
+      .header__settings
         justify-content: left
+        display: grid
+      .header__language
+        grid-column: 2/3
+        grid-row: 1/2
+      .header__info
+        grid-column: 1/2
+        grid-row: 1/2
 </style>

@@ -132,6 +132,15 @@ function translateText(el, binding, vnode) {
   el.tooltip.append(el.triangle);
 }
 
+function isTooltipShouldWork(el, binding, vnode) {
+  const isTooltip = vnode.context.$store.getters["common/GET_TOOLTIP"];
+  if (isTooltip === "on") {
+    el.tooltip.classList.remove("tooltip-off");
+  } else {
+    el.tooltip.classList.add("tooltip-off");
+  }
+}
+
 export default {
   bind(el, binding, vnode) {
     setBaseAttrs(el);
@@ -139,17 +148,21 @@ export default {
     translateText(el, binding, vnode);
     el.append(el.tooltip);
     el.addEventListener("mouseenter", () => {
-      el.tooltip.style.display = "flex";
-      setTimeout(() => {
-        el.tooltip.style.display = "none";
-      }, 2000);
+      if (!el.tooltip.classList.contains("tooltip-off")) {
+        el.tooltip.style.display = "flex";
+        setTimeout(() => {
+          el.tooltip.style.display = "none";
+        }, 2000);
+      }
     });
     el.addEventListener("mouseleave", () => {
       el.tooltip.style.display = "none";
     });
+    isTooltipShouldWork(el, binding, vnode);
   },
   componentUpdated(el, binding, vnode) {
     translateText(el, binding, vnode);
     setTooltipPosition(el, binding);
+    isTooltipShouldWork(el, binding, vnode);
   },
 };

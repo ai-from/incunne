@@ -11,6 +11,7 @@ export default {
       songIndex: null,
       isPlaying: false,
     },
+    isTooltip: "off",
   },
   mutations: {
     SET_THEME(state, load) {
@@ -31,6 +32,9 @@ export default {
       state.currentSong.songIndex = load.songIndex;
       state.currentSong.isPlaying = load.isPlaying;
     },
+    SET_TOOLTIP(state, load) {
+      state.isTooltip = load;
+    },
   },
   actions: {
     SET_THEME({ commit }, load) {
@@ -48,6 +52,9 @@ export default {
     SET_CURRENT_SONG({ commit }, load) {
       commit("SET_CURRENT_SONG", load);
     },
+    SET_TOOLTIP({ commit }, load) {
+      commit("SET_TOOLTIP", load);
+    },
   },
   getters: {
     GET_THEME(state) {
@@ -64,6 +71,9 @@ export default {
     },
     GET_CURRENT_SONG(state) {
       return state.currentSong;
+    },
+    GET_TOOLTIP(state) {
+      return state.isTooltip;
     },
   },
 };

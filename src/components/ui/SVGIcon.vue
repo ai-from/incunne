@@ -56,7 +56,7 @@
         </svg>
         <div
             v-if="tooltipText"
-            :class="['tooltip', tooltipLocation ? `tooltip__${tooltipLocation}` : 'tooltip__right']"
+            :class="['tooltip', tooltipLocation ? `tooltip__${tooltipLocation}` : '', isTooltip === 'on' ? '' : 'tooltip-off']"
             ref="SVGIconTooltip"
         >
             {{ tooltipText }}
@@ -66,6 +66,7 @@
 
 <script>
 import { icons } from "../../mixins/svgicons"
+import { mapState } from 'vuex';
 export default {
     name: 'SVGIcon',
     props: {
@@ -119,7 +120,10 @@ export default {
         },
         content() {
             return icons[this.iconName].content;
-        }
+        },
+        ...mapState('common', {
+            isTooltip: state => state.isTooltip
+        })
     },
     methods: {
         colorSVGContent() {
@@ -133,28 +137,32 @@ export default {
                     }
                 })
             }
+        },
+        tooltipAddListeners() {
+            if(this.tooltipText && this.$refs.SVGIcon) {
+                this.$refs.SVGIcon.addEventListener('mouseenter', () => {
+                    if(!this.$refs.SVGIcon.classList.contains('disabled')) {
+                        this.$refs.SVGIconTooltip.style.display = 'block';
+                        setTimeout(() => {
+                            this.$refs.SVGIconTooltip.style.display = 'none';
+                        }, 2000);
+                    }   
+                });
+                this.$refs.SVGIcon.addEventListener('mouseleave', () => {
+                    this.$refs.SVGIconTooltip.style.display = 'none';
+                });
+            }
         }
     },
     watch: {
         color() {
             this.colorSVGContent();
-        }
+        },
     },
     mounted() {
         this.colorSVGContent();
-        // if(this.tooltipText && this.$refs.SVGIcon) {
-        //     this.$refs.SVGIcon.addEventListener('mouseenter', () => {
-        //         if(!this.$refs.SVGIcon.classList.contains('disabled')) {
-        //             this.$refs.SVGIconTooltip.style.display = 'block';
-        //             setTimeout(() => {
-        //                 this.$refs.SVGIconTooltip.style.display = 'none';
-        //             }, 2000);
-        //         }   
-        //     });
-        //     this.$refs.SVGIcon.addEventListener('mouseleave', () => {
-        //         this.$refs.SVGIconTooltip.style.display = 'none';
-        //     });
-        // }   
+        this.tooltipAddListeners();
+        
     },
     updated() {
         this.colorSVGContent();
@@ -220,7 +228,7 @@ export default {
                 transform: translateY(-50%)
                 left: -4px
         &__top
-            top: calc(-100% - 8px)
+            bottom: calc(100% + 6px)
             left: 50%
             transform: translateX(-50%)
             &::before
@@ -276,7 +284,7 @@ export default {
                 right: 4px
                 top: -4px
         &__topLeft
-            top: calc(-100% - 8px)
+            bottom: calc(100% + 6px)
             left: 0
             &::before
                 content: ''
@@ -289,7 +297,7 @@ export default {
                 left: 4px
                 bottom: -4px
         &__topRight
-            top: calc(-100% - 8px)
+            bottom: calc(100% + 6px)
             right: 0
             &::before
                 content: ''
@@ -301,5 +309,7 @@ export default {
                 position: absolute
                 right: 4px
                 bottom: -4px
+        &-off
+            display: none !important
 
 </style>

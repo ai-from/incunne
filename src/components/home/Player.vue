@@ -334,7 +334,8 @@ export default {
       theme: (state) => state.theme,
       isPlayerActive: (state) => state.isPlayerActive,
       lang: state => state.lang,
-      currentSong: state => state.currentSong
+      currentSong: state => state.currentSong,
+      isTooltip: state => state.isTooltip
     }),
     ...mapState("albums", {
       albums: (state) => state.albums,
@@ -710,21 +711,6 @@ export default {
         this.tooltipLocation.copied = 'bottom';
         this.tooltipLocation.text = 'bottom';
         this.tooltipLocation.volume = 'bottom';
-      } else {
-        this.tooltipLocation.prevSong = 'right';
-        this.tooltipLocation.nextSong = 'right';
-        this.tooltipLocation.play = 'right';
-        this.tooltipLocation.pause = 'right';
-        this.tooltipLocation.timeBack = 'right';
-        this.tooltipLocation.timeForward = 'right';
-        this.tooltipLocation.repeat = 'left';
-        this.tooltipLocation.mix = 'left';
-        this.tooltipLocation.queue = 'left';
-        this.tooltipLocation.download = 'left';
-        this.tooltipLocation.share = 'left';
-        this.tooltipLocation.copied = 'left';
-        this.tooltipLocation.text = 'left';
-        this.tooltipLocation.volume = 'left';
       }
     },
     isSafariCheck() {
