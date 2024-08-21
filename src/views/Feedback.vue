@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       links: [
-        {name: 'VK page', innerName: 'vk-page', href: 'https://vk.com/code.music', alt: 'Incunne | VK page', title: 'Incunne | VK page', isHover: false},
+        {name: 'VK page', innerName: 'vk-page', href: 'https://vk.com/stanley.hughes', alt: 'Incunne | VK page', title: 'Incunne | VK page', isHover: false},
         {name: 'VK community', innerName: 'vk-community', href: 'https://vk.com/incunne', alt: 'Incunne | VK community', title: 'Incunne | VK community', isHover: false},
         {name: 'SoundCloud', innerName: 'sound-cloud', href: 'https://soundcloud.com/incunne', alt: 'Incunne | SoundCloud', title: 'Incunne | SoundCloud', isHover: false},
         {name: 'RealMusic', innerName: 'real-music', href: 'https://www.realrocks.ru/incunne/', alt: 'Incunne | RealMusic', title: 'Incunne | RealMusic', isHover: false},
